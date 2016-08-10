@@ -2,10 +2,10 @@
 
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class UtilsTest < ::Test::Unit::TestCase
-      include Elasticsearch::API::Utils
+      include Elasticsearch2::API::Utils
 
       context "Utils" do
 
@@ -90,7 +90,7 @@ module Elasticsearch
         context "__bulkify" do
 
           should "serialize array of hashes" do
-            result = Elasticsearch::API::Utils.__bulkify [
+            result = Elasticsearch2::API::Utils.__bulkify [
               { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
               { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
               { :delete => { :_index => 'myindexC', :_type => 'mytypeC', :_id => '3' } }
@@ -116,7 +116,7 @@ module Elasticsearch
           end
 
           should "serialize arrays of strings" do
-            result = Elasticsearch::API::Utils.__bulkify ['{"foo":"bar"}','{"moo":"bam"}']
+            result = Elasticsearch2::API::Utils.__bulkify ['{"foo":"bar"}','{"moo":"bam"}']
             assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
               {"foo":"bar"}
               {"moo":"bam"}
@@ -124,7 +124,7 @@ module Elasticsearch
           end
 
           should "serialize arrays of header/data pairs" do
-            result = Elasticsearch::API::Utils.__bulkify [{:foo => "bar"},{:moo => "bam"},{:foo => "baz"}]
+            result = Elasticsearch2::API::Utils.__bulkify [{:foo => "bar"},{:moo => "bam"},{:foo => "baz"}]
             assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
               {"foo":"bar"}
               {"moo":"bam"}
@@ -134,7 +134,7 @@ module Elasticsearch
 
           should "not modify the original payload with the data option" do
             original = [ { :index => {:foo => 'bar', :data => {:moo => 'bam'} } } ]
-            result = Elasticsearch::API::Utils.__bulkify original
+            result = Elasticsearch2::API::Utils.__bulkify original
             assert_not_nil original.first[:index][:data], "Deleted :data from #{original}"
             assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
               {"index":{"foo":"bar"}}
@@ -144,7 +144,7 @@ module Elasticsearch
 
           should "not modify the original payload with meta/data pairs" do
             original = [ { :index => {:foo => 'bar'} }, { :data => {:a => 'b', :data => {:c => 'd'} } } ]
-            result = Elasticsearch::API::Utils.__bulkify original
+            result = Elasticsearch2::API::Utils.__bulkify original
 
             assert_not_nil original.last[:data], "Deleted :data from #{original}"
             assert_not_nil original.last[:data][:data], "Deleted :data from #{original}"
@@ -163,7 +163,7 @@ module Elasticsearch
 
         context "__validate_and_extract_params" do
           teardown do
-            Elasticsearch::API.settings.clear
+            Elasticsearch2::API.settings.clear
           end
 
           should "extract valid params from a Hash" do
@@ -197,7 +197,7 @@ module Elasticsearch
 
           should "not validate parameters when the module setting is set" do
             assert_nothing_raised do
-              Elasticsearch::API.settings[:skip_parameter_validation] = true
+              Elasticsearch2::API.settings[:skip_parameter_validation] = true
               result = __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar] )
               assert_equal( { :foo => 'q', :bam => 'm' }, result )
             end

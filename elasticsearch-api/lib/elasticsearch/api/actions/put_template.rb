@@ -1,8 +1,8 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
-      # Store a template for the search definition in Elasticsearch,
+      # Store a template for the search definition in Elasticsearch2,
       # to be later used with the `search_template` method
       #
       # @option arguments [String] :id Template ID (*Required*)

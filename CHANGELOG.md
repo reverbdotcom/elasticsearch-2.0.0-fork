@@ -40,7 +40,7 @@
 
 ## 2.0.0
 
-* Added deprecation notices to API methods and parameters not supported on Elasticsearch 2.x
+* Added deprecation notices to API methods and parameters not supported on Elasticsearch2 2.x
 
 ## 1.1.0
 
@@ -99,7 +99,7 @@
 * Improved the documentation for the "Backup" extension and added it to the main README
 * Added the information about the "Reindex" extension to the README
 * Added a reindex extension
-* Improved the `Elasticsearch::Extensions::Test::Cluster` extension
+* Improved the `Elasticsearch2::Extensions::Test::Cluster` extension
 
 ## 1.0.17
 
@@ -134,7 +134,7 @@
 ## DSL:0.1.3
 
 * Changed, that `global` aggregation takes a block
-* Updated the README example to work with Elasticsearch 2.x
+* Updated the README example to work with Elasticsearch2 2.x
 * Improved the documentation and integration tests for inner (nested) aggregaation
 * Added the option method `field` and `script` to the "stats" aggregation
 
@@ -157,14 +157,14 @@
 ### Client
 
 * Added the option to configure the Faraday adapter using a block and the relevant documentation
-* Added information about configuring the client for the Amazon Elasticsearch Service
+* Added information about configuring the client for the Amazon Elasticsearch2 Service
 * Added the `retry_on_status` option to retry on specific HTTP response statuses
 * Changed, that transports can close connections during `__rebuild_connections`
 * Added, that the Manticore adapter closes connections during reload ("sniffing")
 
 ## 1.0.14
 
-* Clarified version support of Elasticsearch
+* Clarified version support of Elasticsearch2
 * Improved the `elasticsearch:build` Rake task to work with branch names
 
 ### API
@@ -177,7 +177,7 @@
 * Added the "Shard Stores" API
 * Added, that document ID is URL-escaped when percolating an existing document
 * Allow passing TEST_CLUSTER_PARAMS to the test cluster
-* Define the path to core REST tests dynamically based on Elasticsearch version
+* Define the path to core REST tests dynamically based on Elasticsearch2 version
 * Fixed example in "Get Warmer" API
 * Fixed incorrect documentation and link in the "Clear Cache" API
 * Fixed integration tests for the "Snapshot and Restore" API
@@ -208,7 +208,7 @@
 
 ### Client
 
-* Added, that connection reloading supports Elasticsearch 2.0 output
+* Added, that connection reloading supports Elasticsearch2 2.0 output
 * Improved thread safety in parts of connection handling code
 
 ## DSL:1.0.1
@@ -241,7 +241,7 @@
 
 ### Watcher
 
-* Added the integration with Elasticsearch Watcher plugin
+* Added the integration with Elasticsearch2 Watcher plugin
 
 ## 1.0.9
 
@@ -257,7 +257,7 @@
 * Prevent mutating the parameter passed to __extract_hosts() method
 * Removed the `ipv4` resolve mode setting in the Curb adapter
 * Update Manticore to utilize new SSL settings
-* Updated the Curb integration test to not fail on older Elasticsearch versions
+* Updated the Curb integration test to not fail on older Elasticsearch2 versions
 
 ### API
 
@@ -307,8 +307,8 @@
 * Added the "Cat Segments" API
 * Updated the code and documentation for the "Cluster State" API
 * Fixed incorrect examples for the "Percolate" API
-* Added a `Elasticsearch::API.settings` method for accessing module settings
-* Added a `Elasticsearch::API.settings[:skip_parameter_validation]` setting support into `__validate_and_extract_params`
+* Added a `Elasticsearch2::API.settings` method for accessing module settings
+* Added a `Elasticsearch2::API.settings[:skip_parameter_validation]` setting support into `__validate_and_extract_params`
 * Added `master_timeout` parameters to the "Template Exists" and "Get Template" APIs
 * Fixed incorrect encoding of Array parameters
 * Added support for the `metric` parameter in the "Nodes Info" API
@@ -440,4 +440,4 @@
 
 ### Extensions
 
-* Improved the documentation for `Elasticsearch::Extensions::Test::Cluster`
+* Improved the documentation for `Elasticsearch2::Extensions::Test::Cluster`

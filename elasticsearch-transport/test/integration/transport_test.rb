@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
+class Elasticsearch2::Transport::ClientIntegrationTest < Elasticsearch2::Test::IntegrationTestCase
   startup do
-    Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+    Elasticsearch2::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch2::Extensions::Test::Cluster.running?
   end
 
   shutdown do
-    Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+    Elasticsearch2::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch2::Extensions::Test::Cluster.running?
   end
 
   context "Transport" do
@@ -19,25 +19,25 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'typhoeus'
       require 'typhoeus/adapters/faraday'
 
-      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+      transport = Elasticsearch2::Transport::Transport::HTTP::Faraday.new \
         :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
           f.response :logger
           f.adapter  :typhoeus
         end
 
-      client = Elasticsearch::Transport::Client.new transport: transport
+      client = Elasticsearch2::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
     end
 
     should "allow to define connection parameters and pass them" do
-      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+      transport = Elasticsearch2::Transport::Transport::HTTP::Faraday.new \
                     :hosts => [ { :host => 'localhost', :port => @port } ],
                     :options => { :transport_options => {
                                     :params => { :format => 'yaml' }
                                   }
                                 }
 
-      client = Elasticsearch::Transport::Client.new transport: transport
+      client = Elasticsearch2::Transport::Client.new transport: transport
       response = client.perform_request 'GET', ''
 
       assert response.body.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
@@ -47,12 +47,12 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'curb'
       require 'elasticsearch/transport/transport/http/curb'
 
-      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+      transport = Elasticsearch2::Transport::Transport::HTTP::Curb.new \
         :hosts => [ { :host => 'localhost', :port => @port } ] do |curl|
           curl.verbose = true
         end
 
-      client = Elasticsearch::Transport::Client.new transport: transport
+      client = Elasticsearch2::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
     end unless JRUBY
 
@@ -60,12 +60,12 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'curb'
       require 'elasticsearch/transport/transport/http/curb'
 
-      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+      transport = Elasticsearch2::Transport::Transport::HTTP::Curb.new \
         :hosts => [ { :host => 'localhost', :port => @port } ] do |curl|
           curl.verbose = true
         end
 
-      client = Elasticsearch::Transport::Client.new transport: transport
+      client = Elasticsearch2::Transport::Client.new transport: transport
       response = client.perform_request 'GET', ''
 
       assert_respond_to(response.body, :to_hash)

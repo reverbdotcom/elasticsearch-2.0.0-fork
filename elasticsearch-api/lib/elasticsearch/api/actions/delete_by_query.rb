@@ -1,10 +1,10 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
       # Delete documents which match specified query.
       #
-      # Provide the query either as a "query string" query in the `:q` argument, or using the Elasticsearch's
+      # Provide the query either as a "query string" query in the `:q` argument, or using the Elasticsearch2's
       # [Query DSL](http://www.elasticsearch.org/guide/reference/query-dsl/) in the `:body` argument.
       #
       # @example Deleting documents with a simple query

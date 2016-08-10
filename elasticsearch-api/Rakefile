@@ -68,7 +68,7 @@ namespace :test do
     # Check if a test cluster is running
     begin
       url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
-      client = Elasticsearch::Client.new :url => url
+      client = Elasticsearch2::Client.new :url => url
       es_version_info = client.info['version']
       build_hash      = es_version_info['build_hash']
       cluster_running = true
@@ -122,18 +122,18 @@ namespace :test do
   end
 
   namespace :cluster do
-    desc "Start Elasticsearch nodes for tests"
+    desc "Start Elasticsearch2 nodes for tests"
     task :start do
       $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
       require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.start
+      Elasticsearch2::Extensions::Test::Cluster.start
     end
 
-    desc "Stop Elasticsearch nodes for tests"
+    desc "Stop Elasticsearch2 nodes for tests"
     task :stop do
       $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
       require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.stop
+      Elasticsearch2::Extensions::Test::Cluster.stop
     end
   end
 end

@@ -21,7 +21,7 @@ channel  = connection.create_channel
 queue    = channel.queue 'examples.elasticsearch', auto_delete: true
 exchange = channel.default_exchange
 
-elasticsearch = Elasticsearch::Client.new log:true
+elasticsearch = Elasticsearch2::Client.new log:true
 
 elasticsearch.indices.delete index: 'rabbit' rescue nil
 

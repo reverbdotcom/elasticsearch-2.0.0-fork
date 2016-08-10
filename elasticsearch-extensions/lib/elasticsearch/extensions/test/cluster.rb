@@ -18,27 +18,27 @@ class String
   end
 end
 
-module Elasticsearch
+module Elasticsearch2
   module Extensions
     module Test
 
-      # A convenience Ruby class for starting and stopping an Elasticsearch cluster,
+      # A convenience Ruby class for starting and stopping an Elasticsearch2 cluster,
       # eg. for integration tests
       #
       # @example Start a cluster with default configuration,
       #          assuming `elasticsearch` is on $PATH.
       #
       #      require 'elasticsearch/extensions/test/cluster'
-      #      Elasticsearch::Extensions::Test::Cluster.start
+      #      Elasticsearch2::Extensions::Test::Cluster.start
       #
-      # @example Start a cluster with a specific Elasticsearch launch script,
+      # @example Start a cluster with a specific Elasticsearch2 launch script,
       #          eg. from a downloaded `.tar.gz` distribution
       #
       #      system 'wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.1.tar.gz'
       #      system 'tar -xvf elasticsearch-5.1.1.tar.gz'
       #
       #      require 'elasticsearch/extensions/test/cluster'
-      #      Elasticsearch::Extensions::Test::Cluster.start command: 'elasticsearch-5.1.1/bin/elasticsearch'
+      #      Elasticsearch2::Extensions::Test::Cluster.start command: 'elasticsearch-5.1.1/bin/elasticsearch'
       #
       # @see Cluster#initialize
       #
@@ -181,7 +181,7 @@ module Elasticsearch
           #
           # @option arguments [String]  :cluster_name Cluster name (default: `elasticsearch_test`)
           # @option arguments [Integer] :number_of_nodes Number of desired nodes (default: 2)
-          # @option arguments [String]  :command      Elasticsearch command (default: `elasticsearch`)
+          # @option arguments [String]  :command      Elasticsearch2 command (default: `elasticsearch`)
           # @option arguments [String]  :port         Starting port number; will be auto-incremented (default: 9250)
           # @option arguments [String]  :node_name    The node name (will be appended with a number)
           # @option arguments [String]  :path_data    Path to the directory to store data in
@@ -229,18 +229,18 @@ module Elasticsearch
           # information about the cluster -- unless this specific cluster is already running.
           #
           # @example Start a cluster with the default configuration (2 nodes, installed version, etc)
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new.start
+          #      Elasticsearch2::Extensions::Test::Cluster::Cluster.new.start
           #
           # @example Start a cluster with a custom configuration
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(
+          #      Elasticsearch2::Extensions::Test::Cluster::Cluster.new(
           #        cluster_name: 'my-cluster',
           #        number_of_nodes: 3,
           #        node_name: 'my-node',
           #        port: 9350
           #      ).start
           #
-          # @example Start a cluster with a different Elasticsearch version
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(
+          # @example Start a cluster with a different Elasticsearch2 version
+          #      Elasticsearch2::Extensions::Test::Cluster::Cluster.new(
           #        command: "/usr/local/Cellar/elasticsearch/1.0.0.Beta2/bin/elasticsearch"
           #      ).start
           #
@@ -249,18 +249,18 @@ module Elasticsearch
           #
           def start
             if self.running?
-              __log "[!] Elasticsearch cluster already running".ansi(:red)
+              __log "[!] Elasticsearch2 cluster already running".ansi(:red)
               return false
             end
 
             __remove_cluster_data if @clear_cluster
 
             __log "Starting ".ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
-                  " Elasticsearch #{arguments[:number_of_nodes] < 2 ? 'node' : 'nodes'}..".ansi(:faint), :print
+                  " Elasticsearch2 #{arguments[:number_of_nodes] < 2 ? 'node' : 'nodes'}..".ansi(:faint), :print
 
             pids = []
 
-            __log "\nUsing Elasticsearch version [#{version}]" if ENV['DEBUG']
+            __log "\nUsing Elasticsearch2 version [#{version}]" if ENV['DEBUG']
 
             arguments[:number_of_nodes].times do |n|
               n += 1
@@ -288,10 +288,10 @@ module Elasticsearch
           # Fetches the PID numbers from "Nodes Info" API and terminates matching nodes.
           #
           # @example Stop the default cluster
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new.stop
+          #      Elasticsearch2::Extensions::Test::Cluster::Cluster.new.stop
           #
           # @example Stop the cluster reachable on specific port
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(port: 9350).stop
+          #      Elasticsearch2::Extensions::Test::Cluster::Cluster.new(port: 9350).stop
           #
           # @return Boolean,Array
           # @see Cluster#start
@@ -309,7 +309,7 @@ module Elasticsearch
             pids  = nodes['nodes'].map { |id, info| info['process']['id'] }
 
             unless pids.empty?
-              __log "Stopping Elasticsearch nodes... ".ansi(:faint), :print
+              __log "Stopping Elasticsearch2 nodes... ".ansi(:faint), :print
 
               pids.each_with_index do |pid, i|
                 ['INT','KILL'].each do |signal|
@@ -364,7 +364,7 @@ module Elasticsearch
             __wait_for_status('green', arguments[:timeout])
           end
 
-          # Returns the major version of Elasticsearch
+          # Returns the major version of Elasticsearch2
           #
           # @return String
           # @see __determine_version
@@ -417,7 +417,7 @@ module Elasticsearch
             end
           end
 
-          # Determine Elasticsearch version to be launched
+          # Determine Elasticsearch2 version to be launched
           #
           # Tries to get the version from the arguments passed,
           # if not available, it parses the version number from the `lib/elasticsearch-X.Y.Z.jar` file,
@@ -436,10 +436,10 @@ module Elasticsearch
               if m = jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
                 m[1]
               else
-                raise RuntimeError, "Cannot determine Elasticsearch version from jar [#{jar}]"
+                raise RuntimeError, "Cannot determine Elasticsearch2 version from jar [#{jar}]"
               end
             else
-              __log "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
+              __log "[!] Cannot find Elasticsearch2 .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
 
               unless File.exist? arguments[:command]
                 __log "File [#{arguments[:command]}] does not exists, checking full path by `which`: ", :print if ENV['DEBUG']
@@ -452,7 +452,7 @@ module Elasticsearch
                 end
 
                 if full_path.empty?
-                  raise Errno::ENOENT, "Cannot find Elasticsearch launch script from [#{arguments[:command]}] -- did you pass a correct path?"
+                  raise Errno::ENOENT, "Cannot find Elasticsearch2 launch script from [#{arguments[:command]}] -- did you pass a correct path?"
                 end
               end
 
@@ -485,13 +485,13 @@ module Elasticsearch
               STDERR.puts "> #{output}" if ENV['DEBUG']
 
               if output.empty?
-                raise RuntimeError, "Cannot determine Elasticsearch version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
+                raise RuntimeError, "Cannot determine Elasticsearch2 version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
               end
 
               if m = output.match(/Version: (\d\.\d.\d).*,/)
                 m[1]
               else
-                raise RuntimeError, "Cannot determine Elasticsearch version from elasticsearch --version output [#{output}]"
+                raise RuntimeError, "Cannot determine Elasticsearch2 version from elasticsearch --version output [#{output}]"
               end
             end
 

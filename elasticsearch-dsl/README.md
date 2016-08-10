@@ -1,9 +1,9 @@
-# Elasticsearch::DSL
+# Elasticsearch2::DSL
 
 The `elasticsearch-dsl` library provides a Ruby API for
-the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html).
+the [Elasticsearch2 Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html).
 
-The library is compatible with Ruby 1.9 or higher and Elasticsearch 1.0 and higher.
+The library is compatible with Ruby 1.9 or higher and Elasticsearch2 1.0 and higher.
 
 ## Installation
 
@@ -32,7 +32,7 @@ Let's have a simple example using the declarative variant:
 
 ```ruby
 require 'elasticsearch/dsl'
-include Elasticsearch::DSL
+include Elasticsearch2::DSL
 
 definition = search do
   query do
@@ -44,7 +44,7 @@ definition.to_hash
 # => { query: { match: { title: "test"} } }
 
 require 'elasticsearch'
-client = Elasticsearch::Client.new trace: true
+client = Elasticsearch2::Client.new trace: true
 
 client.search body: definition
 # curl -X GET 'http://localhost:9200/test/_search?pretty' -d '{
@@ -62,7 +62,7 @@ Let's build the same definition in a more imperative fashion:
 
 ```ruby
 require 'elasticsearch/dsl'
-include Elasticsearch::DSL
+include Elasticsearch2::DSL
 
 definition = Search::Search.new
 definition.query = Search::Queries::Match.new title: 'test'
@@ -71,12 +71,12 @@ definition.to_hash
 # => { query: { match: { title: "test"} } }
 ```
 
-The library doesn't depend on an Elasticsearch client -- its sole purpose is to facilitate
-building search definitions in Ruby. This makes it possible to use it with any Elasticsearch client:
+The library doesn't depend on an Elasticsearch2 client -- its sole purpose is to facilitate
+building search definitions in Ruby. This makes it possible to use it with any Elasticsearch2 client:
 
 ```ruby
 require 'elasticsearch/dsl'
-include Elasticsearch::DSL
+include Elasticsearch2::DSL
 
 definition = search { query { match title: 'test' } }
 
@@ -95,10 +95,10 @@ response = JSON.parse(
 
 ## Features Overview
 
-The library allows to programatically build complex search definitions for Elasticsearch in Ruby,
-which are translated to Hashes, and ultimately, JSON, the language of Elasticsearch.
+The library allows to programatically build complex search definitions for Elasticsearch2 in Ruby,
+which are translated to Hashes, and ultimately, JSON, the language of Elasticsearch2.
 
-All Elasticsearch DSL features are supported, namely:
+All Elasticsearch2 DSL features are supported, namely:
 
 * [Queries](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-queries.html)
 * [Filters](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-filters.html)
@@ -122,9 +122,9 @@ require 'awesome_print'
 require 'elasticsearch'
 require 'elasticsearch/dsl'
 
-include Elasticsearch::DSL
+include Elasticsearch2::DSL
 
-client = Elasticsearch::Client.new transport_options: { request: { timeout: 3600, open_timeout: 3600 } }
+client = Elasticsearch2::Client.new transport_options: { request: { timeout: 3600, open_timeout: 3600 } }
 
 puts "Recovering the 'bicycles.stackexchange.com' index...".yellow
 
@@ -256,14 +256,14 @@ bundle exec rake test:unit
 bundle exec rake test:integration
 ```
 
-To launch a separate Elasticsearch server for integration tests,
+To launch a separate Elasticsearch2 server for integration tests,
 see instructions in the main [README](../README.md#development).
 
 ## License
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2015 Elasticsearch <http://www.elasticsearch.org>
+    Copyright (c) 2015 Elasticsearch2 <http://www.elasticsearch.org>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module DSL
     module Search
       module Filters

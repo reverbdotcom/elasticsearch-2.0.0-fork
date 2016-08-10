@@ -5,10 +5,10 @@ require 'elasticsearch/watcher/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-watcher"
-  s.version       = Elasticsearch::Watcher::VERSION
+  s.version       = Elasticsearch2::Watcher::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
-  s.description   = %q{Ruby Integrations for Elasticsearch Watcher plugin (WIP)}
+  s.description   = %q{Ruby Integrations for Elasticsearch2 Watcher plugin (WIP)}
   s.summary       = s.description
   s.homepage      = ""
   s.license       = "Apache 2"

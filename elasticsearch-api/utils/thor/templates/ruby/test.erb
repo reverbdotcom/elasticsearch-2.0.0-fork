@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class <%= @module_namespace.map {|n| n.capitalize}.map { |n| n == 'Xpack' ? 'XPack' : n  }.join('') + @method_name.camelize %>Test < ::Test::Unit::TestCase
 

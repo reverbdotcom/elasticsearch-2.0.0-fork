@@ -1,10 +1,10 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
       # Return a specified document.
       #
-      # The response contains full document, as stored in Elasticsearch, incl. `_source`, `_version`, etc.
+      # The response contains full document, as stored in Elasticsearch2, incl. `_source`, `_version`, etc.
       #
       # @example Get a document
       #

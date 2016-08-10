@@ -1,4 +1,4 @@
-# Elasticsearch::Watcher
+# Elasticsearch2::Watcher
 
 This library provides Ruby API for the [_Watcher_](https://www.elastic.co/products/watcher) plugin.
 
@@ -33,7 +33,7 @@ about the watch execution is quoted below.
 require 'elasticsearch'
 require 'elasticsearch/watcher'
 
-client = Elasticsearch::Client.new url: 'http://localhost:9200', log: true
+client = Elasticsearch2::Client.new url: 'http://localhost:9200', log: true
 client.transport.logger.formatter = proc do |severity, datetime, progname, msg| "\e[2m#{msg}\e[0m\n" end
 
 # Delete the Watcher and test indices
@@ -151,7 +151,7 @@ ruby -r sinatra -r json -e 'post("/") { json = JSON.parse(request.body.read); pu
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2015 Elasticsearch <http://www.elasticsearch.org>
+    Copyright (c) 2015 Elasticsearch2 <http://www.elasticsearch.org>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

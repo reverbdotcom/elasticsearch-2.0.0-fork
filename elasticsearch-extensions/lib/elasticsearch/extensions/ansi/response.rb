@@ -1,8 +1,8 @@
-module Elasticsearch
+module Elasticsearch2
   module Extensions
     module ANSI
 
-      # Wrapper for the Elasticsearch response body, which adds a {#to_ansi} method
+      # Wrapper for the Elasticsearch2 response body, which adds a {#to_ansi} method
       #
       class ResponseBody < DelegateClass(Hash)
         def initialize(body)
@@ -10,7 +10,7 @@ module Elasticsearch
         end
 
         # Return a [colorized and formatted](http://en.wikipedia.org/wiki/ANSI_escape_code)
-        # representation of the Elasticsearch response for:
+        # representation of the Elasticsearch2 response for:
         #
         # * Search results (hits and highlights)
         # * Facets (terms, statistical, histogram, date_histogram)
@@ -20,7 +20,7 @@ module Elasticsearch
         # @example Display formatted search results
         #
         #     require 'elasticsearch/extensions/ansi'
-        #     puts Elasticsearch::Client.new.search.to_ansi
+        #     puts Elasticsearch2::Client.new.search.to_ansi
         #
         # @todo Add all facets and handlers for remaining response parts / types
         #
@@ -43,7 +43,7 @@ module Elasticsearch
   end
 end
 
-module Elasticsearch
+module Elasticsearch2
   module Transport
     module Transport
 

@@ -1,11 +1,11 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Indices
       module Actions
 
         # Return the result of the analysis process (tokens)
         #
-        # Allows to "test-drive" the Elasticsearch analysis process by performing the analysis on the
+        # Allows to "test-drive" the Elasticsearch2 analysis process by performing the analysis on the
         # same text with different analyzers. An ad-hoc analysis chain can be built from specific
         # _tokenizer_ and _filters_.
         #

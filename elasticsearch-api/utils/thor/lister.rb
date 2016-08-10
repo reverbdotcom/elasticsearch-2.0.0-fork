@@ -4,7 +4,7 @@ require 'thor'
 
 require 'pathname'
 
-module Elasticsearch
+module Elasticsearch2
 
   module API
 

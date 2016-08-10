@@ -29,18 +29,18 @@ namespace :test do
   end
 
   namespace :cluster do
-    desc "Start Elasticsearch nodes for tests"
+    desc "Start Elasticsearch2 nodes for tests"
     task :start do
       $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
       require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.start
+      Elasticsearch2::Extensions::Test::Cluster.start
     end
 
-    desc "Stop Elasticsearch nodes for tests"
+    desc "Stop Elasticsearch2 nodes for tests"
     task :stop do
       $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
       require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.stop
+      Elasticsearch2::Extensions::Test::Cluster.stop
     end
   end
 end
@@ -130,7 +130,7 @@ namespace :generate do
     option_methods = "\n\n#{option_methods}" unless option_methods.empty?
 
     source = <<-RUBY.gsub(/^      /, '')
-      module Elasticsearch
+      module Elasticsearch2
         module DSL
           module Search
             module #{module_name}
@@ -179,11 +179,11 @@ namespace :generate do
     test = <<-RUBY.gsub(/^      /, '')
       require 'test_helper'
 
-      module Elasticsearch
+      module Elasticsearch2
         module Test
           module #{module_name}
             class #{class_name}Test < ::Test::Unit::TestCase
-              include Elasticsearch::DSL::Search::#{module_name}
+              include Elasticsearch2::DSL::Search::#{module_name}
 
               context "#{class_name} #{options[:type]}" do
                 subject { #{class_name}.new }

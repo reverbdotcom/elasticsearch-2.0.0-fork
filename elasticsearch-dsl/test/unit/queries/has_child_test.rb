@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     module Queries
       class HasChildTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include Elasticsearch2::DSL::Search::Queries
 
         context "HasChild query" do
           subject { HasChild.new }

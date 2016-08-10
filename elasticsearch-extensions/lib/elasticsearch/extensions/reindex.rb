@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-module Elasticsearch
+module Elasticsearch2
   module Extensions
 
     # This module allows copying documents from one index/cluster to another one
@@ -10,7 +10,7 @@ module Elasticsearch
     # @see Reindex::Reindex.initialize
     # @see Reindex::Reindex#perform
     #
-    # @see http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#reindex-instance_method
+    # @see http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch2/API/Actions#reindex-instance_method
     #
     module Reindex
 
@@ -30,7 +30,7 @@ module Elasticsearch
         #
         # The method allows all the options as {Reindex::Reindex.new}.
         #
-        # This method will be mixed into the Elasticsearch client's API, if available.
+        # This method will be mixed into the Elasticsearch2 client's API, if available.
         #
         def reindex(arguments={})
           arguments[:source] ||= {}
@@ -40,15 +40,15 @@ module Elasticsearch
       end
 
       # Include the `reindex` method in the API and client, if available
-      Elasticsearch::API::Actions.__send__ :include, API if defined?(Elasticsearch::API::Actions)
-      Elasticsearch::Transport::Client.__send__ :include, API if defined?(Elasticsearch::Transport::Client) && defined?(Elasticsearch::API)
+      Elasticsearch2::API::Actions.__send__ :include, API if defined?(Elasticsearch2::API::Actions)
+      Elasticsearch2::Transport::Client.__send__ :include, API if defined?(Elasticsearch2::Transport::Client) && defined?(Elasticsearch2::API)
 
       # Copy documents from one index into another
       #
       # @example Copy documents to another index
       #
-      #   client  = Elasticsearch::Client.new
-      #   reindex = Elasticsearch::Extensions::Reindex.new \
+      #   client  = Elasticsearch2::Client.new
+      #   reindex = Elasticsearch2::Extensions::Reindex.new \
       #               source: { index: 'test1', client: client },
       #               target: { index: 'test2' }
       #
@@ -56,17 +56,17 @@ module Elasticsearch
       #
       # @example Copy documents to a different cluster
       #
-      #     source_client  = Elasticsearch::Client.new url: 'http://localhost:9200'
-      #     target_client  = Elasticsearch::Client.new url: 'http://localhost:9250'
+      #     source_client  = Elasticsearch2::Client.new url: 'http://localhost:9200'
+      #     target_client  = Elasticsearch2::Client.new url: 'http://localhost:9250'
       #
-      #     reindex = Elasticsearch::Extensions::Reindex.new \
+      #     reindex = Elasticsearch2::Extensions::Reindex.new \
       #                 source: { index: 'test', client: source_client },
       #                 target: { index: 'test', client: target_client }
       #     reindex.perform
       #
       # @example Transform the documents during re-indexing
       #
-      #     reindex = Elasticsearch::Extensions::Reindex.new \
+      #     reindex = Elasticsearch2::Extensions::Reindex.new \
       #                 source: { index: 'test1', client: client },
       #                 target: { index: 'test2', transform: lambda { |doc| doc['_source']['category'].upcase! } }
       #
@@ -85,10 +85,10 @@ module Elasticsearch
       # Be aware, that if you want to change the target index settings and/or mappings,
       # you have to do so in advance by using the "Indices Create" API.
       #
-      # Note, that there is a native "Reindex" API in Elasticsearch 2.3.x and higer versions,
+      # Note, that there is a native "Reindex" API in Elasticsearch2 2.3.x and higer versions,
       # which will be more performant than the Ruby version.
       #
-      # @see http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#reindex-instance_method
+      # @see http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch2/API/Actions#reindex-instance_method
       #
       class Reindex
         attr_reader :arguments

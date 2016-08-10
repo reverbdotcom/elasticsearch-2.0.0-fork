@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
-    class SizeIntegrationTest < ::Elasticsearch::Test::IntegrationTestCase
-      include Elasticsearch::DSL::Search
+    class SizeIntegrationTest < ::Elasticsearch2::Test::IntegrationTestCase
+      include Elasticsearch2::DSL::Search
 
         context "Search results pagination" do
           setup do

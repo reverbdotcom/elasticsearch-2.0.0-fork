@@ -1,8 +1,8 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
-      # Retrieve an indexed template from Elasticsearch
+      # Retrieve an indexed template from Elasticsearch2
       #
       # @option arguments [String] :id Template ID
       #

@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Indices
       module Actions
@@ -14,7 +14,7 @@ module Elasticsearch
         #
         #     client.indices.optimize index: 'foo', max_num_segments: 1, wait_for_merge: false
         #
-        # @note The optimize operation is handled automatically by Elasticsearch, you don't need to perform it manually.
+        # @note The optimize operation is handled automatically by Elasticsearch2, you don't need to perform it manually.
         #       The operation is expensive in terms of resources (I/O, CPU, memory) and can take a long time to
         #       finish, potentially reducing operability of your cluster; schedule the manual optimization accordingly.
         #

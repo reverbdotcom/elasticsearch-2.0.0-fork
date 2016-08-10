@@ -1,10 +1,10 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
       # Return a specified document's `_source`.
       #
-      # The response contains just the original document, as passed to Elasticsearch during indexing.
+      # The response contains just the original document, as passed to Elasticsearch2 during indexing.
       #
       # @example Get a document `_source`
       #

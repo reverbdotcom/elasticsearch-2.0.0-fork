@@ -29,17 +29,17 @@ require 'elasticsearch/extensions'
 require 'elasticsearch/extensions/test/startup_shutdown'
 require 'elasticsearch/extensions/test/cluster'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class IntegrationTestCase < ::Test::Unit::TestCase
-      extend Elasticsearch::Extensions::Test::StartupShutdown
+      extend Elasticsearch2::Extensions::Test::StartupShutdown
 
       startup do
-        Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+        Elasticsearch2::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch2::Extensions::Test::Cluster.running?
       end
 
       shutdown do
-        Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+        Elasticsearch2::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch2::Extensions::Test::Cluster.running?
       end
     end
   end

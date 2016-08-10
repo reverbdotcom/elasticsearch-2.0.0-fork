@@ -23,14 +23,14 @@ Turn.config.format = :pretty
 
 # Launch test cluster
 #
-if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
-  Elasticsearch::Extensions::Test::Cluster.start
+if ENV['SERVER'] and not Elasticsearch2::Extensions::Test::Cluster.running?
+  Elasticsearch2::Extensions::Test::Cluster.start
 end
 
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
 #
-at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running? }
+at_exit { Elasticsearch2::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch2::Extensions::Test::Cluster.running? }
 
 class String
   # Reset the `ansi` method on CI
@@ -79,19 +79,19 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #     ruby -I lib:test -r ./tmp/my_special_client.rb test/integration/yaml_test_runner.rb
 #
 url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
-$client ||= Elasticsearch::Client.new url: url
-$helper_client ||= Elasticsearch::Client.new url: url
+$client ||= Elasticsearch2::Client.new url: url
+$helper_client ||= Elasticsearch2::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
 # $client.transport.tracer = tracer if ENV['CI']
 
-# Store Elasticsearch version
+# Store Elasticsearch2 version
 #
 es_version_info = $client.info['version']
 $es_version = es_version_info['number']
 
 puts '-'*80,
-     "Elasticsearch #{$es_version.ansi(:bold)} [#{es_version_info['build_hash'].to_s[0...7]}]".center(80),
+     "Elasticsearch2 #{$es_version.ansi(:bold)} [#{es_version_info['build_hash'].to_s[0...7]}]".center(80),
      '-'*80
 
 require 'test_helper'
@@ -129,7 +129,7 @@ module Shoulda
   end
 end
 
-module Elasticsearch
+module Elasticsearch2
   module YamlTestSuite
     $last_response = ''
     $results = {}
@@ -279,7 +279,7 @@ module Elasticsearch
   end
 end
 
-include Elasticsearch::YamlTestSuite
+include Elasticsearch2::YamlTestSuite
 
 rest_api_test_source = $client.info['version']['number'] < '2' ? '../../../../tmp/elasticsearch/rest-api-spec/test' : '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test'
 PATH    = Pathname(ENV.fetch('TEST_REST_API_SPEC', File.expand_path(rest_api_test_source, __FILE__)))
@@ -288,9 +288,9 @@ suites  = Dir.glob(PATH.join('*')).map { |d| Pathname(d) }
 suites  = suites.select { |s| s.to_s =~ Regexp.new(ENV['FILTER']) } if ENV['FILTER']
 
 suites.each do |suite|
-  name = Elasticsearch::YamlTestSuite::Utils.titleize(suite.basename)
+  name = Elasticsearch2::YamlTestSuite::Utils.titleize(suite.basename)
 
-  Elasticsearch::YamlTestSuite::Runner.in_context name do
+  Elasticsearch2::YamlTestSuite::Runner.in_context name do
 
     # --- Register context setup -------------------------------------------
     #

@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module Transport
     module Transport
 
@@ -10,7 +10,7 @@ module Elasticsearch
       #
       class SnifferTimeoutError < Timeout::Error; end
 
-      # Elasticsearch server error (HTTP status 5xx)
+      # Elasticsearch2 server error (HTTP status 5xx)
       #
       class ServerError < Error; end
 
