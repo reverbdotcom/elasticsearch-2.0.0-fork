@@ -220,18 +220,18 @@ namespace :test do
   namespace :cluster do
     desc "Start Elasticsearch2 nodes for tests"
     task :start do
-      require 'elasticsearch/extensions/test/cluster'
+      require 'elasticsearch2/extensions/test/cluster'
       Elasticsearch2::Extensions::Test::Cluster.start
     end
 
     desc "Stop Elasticsearch2 nodes for tests"
     task :stop do
-      require 'elasticsearch/extensions/test/cluster'
+      require 'elasticsearch2/extensions/test/cluster'
       Elasticsearch2::Extensions::Test::Cluster.stop
     end
 
     task :status do
-      require 'elasticsearch/extensions/test/cluster'
+      require 'elasticsearch2/extensions/test/cluster'
       (puts "\e[31m[!] Test cluster not running\e[0m"; exit(1)) unless Elasticsearch2::Extensions::Test::Cluster.running?
       Elasticsearch2::Extensions::Test::Cluster.__print_cluster_info(ENV['TEST_CLUSTER_PORT'] || 9250)
     end
