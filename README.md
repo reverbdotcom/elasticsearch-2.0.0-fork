@@ -48,7 +48,7 @@ library is a wrapper for two separate libraries:
   which provides a Ruby API for the Elasticsearch2 RESTful API
 
 ```ruby
-require 'elasticsearch'
+require 'elasticsearch2'
 
 client = Elasticsearch2::Client.new log: true
 

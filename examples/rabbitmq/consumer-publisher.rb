@@ -9,7 +9,7 @@
 require 'multi_json'
 require 'oj'
 
-require 'elasticsearch'
+require 'elasticsearch2'
 
 require 'bunny'
 
