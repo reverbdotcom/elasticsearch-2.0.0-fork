@@ -1,8 +1,8 @@
-module Elasticsearch
+module Elasticsearch2
   module Transport
     module Transport
 
-      # Wraps the response from Elasticsearch.
+      # Wraps the response from Elasticsearch2.
       #
       class Response
         attr_reader :status, :body, :headers

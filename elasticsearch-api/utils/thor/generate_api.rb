@@ -7,7 +7,7 @@ require 'rest_client'
 require 'json'
 require 'pry'
 
-module Elasticsearch
+module Elasticsearch2
 
   module API
     module Utils
@@ -20,7 +20,7 @@ module Elasticsearch
       # request.hasContent()
       PATTERN_HAS_BODY   = /request\.hasContent()/
 
-      # Parses the Elasticsearch source code and returns a Hash of REST API information/specs.
+      # Parses the Elasticsearch2 source code and returns a Hash of REST API information/specs.
       #
       # Example:
       #
@@ -75,7 +75,7 @@ module Elasticsearch
       extend self
     end
 
-    # Contains a generator which will parse the Elasticsearch *.java source files,
+    # Contains a generator which will parse the Elasticsearch2 *.java source files,
     # extract information about REST API endpoints (URLs, HTTP methods, URL parameters, etc),
     # and create a skeleton of the JSON API specification file for each endpoint.
     #
@@ -110,12 +110,12 @@ module Elasticsearch
 
       # Usage: thor help api:generate:spec
       #
-      desc "generate", "Generate JSON API spec files from Elasticsearch source code"
+      desc "generate", "Generate JSON API spec files from Elasticsearch2 source code"
       method_option :force,     type: :boolean, default: false,            desc: 'Overwrite the output'
       method_option :verbose,   type: :boolean, default: false,            desc: 'Output more information'
       method_option :output,    default: __root.join('tmp/out'),           desc: 'Path to output directory'
-      method_option :elasticsearch, default: __root.join('tmp/elasticsearch'), desc: 'Path to directory with Elasticsearch source code'
-      method_option :crawl,     type: :boolean, default: false,            desc: 'Extract URLs from Elasticsearch website'
+      method_option :elasticsearch, default: __root.join('tmp/elasticsearch'), desc: 'Path to directory with Elasticsearch2 source code'
+      method_option :crawl,     type: :boolean, default: false,            desc: 'Extract URLs from Elasticsearch2 website'
 
       def generate
         self.class.source_root File.expand_path('../', __FILE__)
@@ -125,7 +125,7 @@ module Elasticsearch
         rest_actions = Utils.__parse_java_source(options[:elasticsearch].to_s)
 
         if rest_actions.empty?
-          say_status 'ERROR', 'Cannot find Elasticsearch source in ' + options[:elasticsearch].to_s, :red
+          say_status 'ERROR', 'Cannot find Elasticsearch2 source in ' + options[:elasticsearch].to_s, :red
           exit(1)
         end
 

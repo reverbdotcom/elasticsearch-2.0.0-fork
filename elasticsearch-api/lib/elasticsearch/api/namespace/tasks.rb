@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Tasks
       module Actions; end

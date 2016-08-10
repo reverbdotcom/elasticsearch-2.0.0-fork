@@ -3,7 +3,7 @@
 require 'elasticsearch'
 require 'elasticsearch/extensions/version'
 
-module Elasticsearch
+module Elasticsearch2
   module Extensions
   end
 end

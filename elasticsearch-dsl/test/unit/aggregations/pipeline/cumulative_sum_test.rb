@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     module Aggregations
       class CumulativeSumTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Aggregations
+        include Elasticsearch2::DSL::Search::Aggregations
 
         context "Cumulative Sum Bucket agg" do
           subject { CumulativeSum.new }

@@ -2,8 +2,8 @@ require 'test_helper'
 
 require 'elasticsearch/extensions/test/cluster'
 
-class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
-  include Elasticsearch::Extensions::Test
+class Elasticsearch2::Extensions::TestClusterTest < Test::Unit::TestCase
+  include Elasticsearch2::Extensions::Test
   context "The Test::Cluster" do
     context "module" do
       should "delegate the methods to the class" do
@@ -13,18 +13,18 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           .returns(mock start: true, stop: true, running?: true, wait_for_green: true)
           .times(4)
 
-        Elasticsearch::Extensions::Test::Cluster.start foo: 'bar'
-        Elasticsearch::Extensions::Test::Cluster.stop foo: 'bar'
-        Elasticsearch::Extensions::Test::Cluster.running? foo: 'bar'
-        Elasticsearch::Extensions::Test::Cluster.wait_for_green foo: 'bar'
+        Elasticsearch2::Extensions::Test::Cluster.start foo: 'bar'
+        Elasticsearch2::Extensions::Test::Cluster.stop foo: 'bar'
+        Elasticsearch2::Extensions::Test::Cluster.running? foo: 'bar'
+        Elasticsearch2::Extensions::Test::Cluster.wait_for_green foo: 'bar'
       end
     end
 
     context "class" do
       setup do
-        Elasticsearch::Extensions::Test::Cluster::Cluster.any_instance.stubs(:__default_network_host).returns('_local_')
+        Elasticsearch2::Extensions::Test::Cluster::Cluster.any_instance.stubs(:__default_network_host).returns('_local_')
 
-        @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new
+        @subject = Elasticsearch2::Extensions::Test::Cluster::Cluster.new
         @subject.stubs(:__remove_cluster_data).returns(true)
       end
 
@@ -121,7 +121,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
       context "when stopping a cluster" do
         setup do
-          @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new
+          @subject = Elasticsearch2::Extensions::Test::Cluster::Cluster.new
         end
 
         should "print information about an exception" do
@@ -153,7 +153,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
       context "when checking if the cluster is running" do
         setup do
-          @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new \
+          @subject = Elasticsearch2::Extensions::Test::Cluster::Cluster.new \
                        cluster_name: 'test',
                        number_of_nodes: 2
         end
@@ -178,7 +178,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
       context "when waiting for cluster state" do
         setup do
-          @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new \
+          @subject = Elasticsearch2::Extensions::Test::Cluster::Cluster.new \
                        cluster_name: 'test',
                        number_of_nodes: 1
         end
@@ -228,7 +228,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
       context "when determining a version" do
         setup do
-          @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new command: '/foo/bar/bin/elasticsearch'
+          @subject = Elasticsearch2::Extensions::Test::Cluster::Cluster.new command: '/foo/bar/bin/elasticsearch'
         end
 
         should "return version from lib/elasticsearch.X.Y.Z.jar" do
@@ -267,7 +267,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         end
 
         should "raise an exception when the version cannot be converted to short version" do
-          # There's no Elasticsearch version 3...
+          # There's no Elasticsearch2 version 3...
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(true)
           Dir.expects(:entries).with('/foo/bar/bin/../lib/').returns(['elasticsearch-3.2.1.jar'])
 

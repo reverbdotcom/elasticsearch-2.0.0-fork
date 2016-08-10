@@ -2,7 +2,7 @@ require 'ruby-prof'
 require 'benchmark'
 require 'ansi'
 
-module Elasticsearch
+module Elasticsearch2
   module Extensions
     module Test
 
@@ -19,7 +19,7 @@ module Elasticsearch
       #     require 'elasticsearch/extensions/test/profiling'
       #
       #     class ProfilingTest < Test::Unit::TestCase
-      #       extend Elasticsearch::Extensions::Test::Profiling
+      #       extend Elasticsearch2::Extensions::Test::Profiling
       #
       #       context "Mathematics" do
       #         measure "divide numbers", count: 10_000 do

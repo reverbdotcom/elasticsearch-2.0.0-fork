@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module Extensions
     module Test
       # Startup/shutdown support for test suites
@@ -6,7 +6,7 @@ module Elasticsearch
       # Example:
       #
       #     class MyTest < Test::Unit::TestCase
-      #       extend Elasticsearch::Extensions::Test::StartupShutdown
+      #       extend Elasticsearch2::Extensions::Test::StartupShutdown
       #
       #       startup  { puts "Suite starting up..." }
       #       shutdown { puts "Suite shutting down..." }

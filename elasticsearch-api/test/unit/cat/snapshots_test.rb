@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class CatSnapshotsTest < ::Test::Unit::TestCase
 

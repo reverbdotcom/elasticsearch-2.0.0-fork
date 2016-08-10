@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-module Elasticsearch
+module Elasticsearch2
   module Extensions
     module ANSI
 

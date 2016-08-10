@@ -16,7 +16,7 @@ Dir[ File.expand_path('../../lib/elasticsearch/api/**/*.rb', __FILE__) ].each do
 end
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
-module Elasticsearch
+module Elasticsearch2
   module Utils
     def __validate_and_extract_params(*args)
       {}
@@ -42,7 +42,7 @@ module Elasticsearch
 
     class FakeClient
       # Include all "Actions" modules into the fake client
-      Elasticsearch::Test.__full_namespace(Elasticsearch::API).select { |m| m.to_s =~ /Actions$/ }.each do |m|
+      Elasticsearch2::Test.__full_namespace(Elasticsearch2::API).select { |m| m.to_s =~ /Actions$/ }.each do |m|
         puts "Including: #{m}" if ENV['DEBUG']
         include m
       end

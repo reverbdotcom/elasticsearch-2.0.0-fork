@@ -1,28 +1,28 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::ProfilingTest
+class Elasticsearch2::Transport::ClientProfilingTest < Elasticsearch2::Test::ProfilingTest
   startup do
-    Elasticsearch::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+    Elasticsearch2::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch2::Extensions::Test::Cluster.running?
   end
 
-  context "Elasticsearch client benchmark" do
+  context "Elasticsearch2 client benchmark" do
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-      client = Elasticsearch::Client.new host: "localhost:#{@port}", adapter: ::Faraday.default_adapter
+      client = Elasticsearch2::Client.new host: "localhost:#{@port}", adapter: ::Faraday.default_adapter
       client.perform_request 'DELETE', '/ruby_test_benchmark/' rescue nil
       client.perform_request 'POST',   '/ruby_test_benchmark/', {index: {number_of_shards: 1, number_of_replicas: 0}}
       100.times do client.perform_request 'POST',   '/ruby_test_benchmark_search/test/', {}, {foo: 'bar'}; end
       client.perform_request 'POST',   '/ruby_test_benchmark_search/_refresh'
     end
     teardown do
-      client = Elasticsearch::Client.new host: "localhost:#{@port}"
+      client = Elasticsearch2::Client.new host: "localhost:#{@port}"
       client.perform_request 'DELETE', '/ruby_test_benchmark/'
       client.perform_request 'DELETE', '/ruby_test_benchmark_search/'
     end
 
     context "with a single-node cluster and the default adapter" do
       setup do
-        @client = Elasticsearch::Client.new hosts: "localhost:#{@port}", adapter: ::Faraday.default_adapter
+        @client = Elasticsearch2::Client.new hosts: "localhost:#{@port}", adapter: ::Faraday.default_adapter
       end
 
       measure "get the cluster info", count: 1_000 do
@@ -40,7 +40,7 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
 
     context "with a two-node cluster and the default adapter" do
       setup do
-        @client = Elasticsearch::Client.new hosts: ["localhost:#{@port}", "localhost:#{@port+1}"], adapter: ::Faraday.default_adapter
+        @client = Elasticsearch2::Client.new hosts: ["localhost:#{@port}", "localhost:#{@port+1}"], adapter: ::Faraday.default_adapter
       end
 
       measure "get the cluster info", count: 1_000 do
@@ -60,8 +60,8 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       setup do
         require 'curb'
         require 'elasticsearch/transport/transport/http/curb'
-        @client = Elasticsearch::Client.new host: "localhost:#{@port}",
-                                            transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+        @client = Elasticsearch2::Client.new host: "localhost:#{@port}",
+                                            transport_class: Elasticsearch2::Transport::Transport::HTTP::Curb
       end
 
       measure "get the cluster info", count: 1_000 do
@@ -82,12 +82,12 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       require 'typhoeus/adapters/faraday'
 
       setup do
-        transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+        transport = Elasticsearch2::Transport::Transport::HTTP::Faraday.new \
           :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
             f.adapter  :typhoeus
           end
 
-        @client = Elasticsearch::Client.new transport: transport
+        @client = Elasticsearch2::Client.new transport: transport
       end
 
       measure "get the cluster info", count: 1_000 do
@@ -106,7 +106,7 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
     context "with a single-node cluster and the Patron adapter" do
       setup do
         require 'patron'
-        @client = Elasticsearch::Client.new host: "localhost:#{@port}", adapter: :patron
+        @client = Elasticsearch2::Client.new host: "localhost:#{@port}", adapter: :patron
       end
 
       measure "get the cluster info", count: 1_000 do

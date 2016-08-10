@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module Transport
     module Transport
       module Connections

@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     module Queries
       class BoolTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include Elasticsearch2::DSL::Search::Queries
 
         context "Bool Query" do
           subject { Bool.new }

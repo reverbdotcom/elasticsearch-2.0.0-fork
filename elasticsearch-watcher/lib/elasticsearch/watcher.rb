@@ -2,15 +2,15 @@ require "elasticsearch/watcher/version"
 
 Dir[ File.expand_path('../watcher/api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
 
-module Elasticsearch
+module Elasticsearch2
   module Watcher
     def self.included(base)
-      base.__send__ :include, Elasticsearch::API::Watcher
+      base.__send__ :include, Elasticsearch2::API::Watcher
     end
   end
 end
 
-module Elasticsearch
+module Elasticsearch2
   module API
     module Watcher
       module Actions; end
@@ -18,9 +18,9 @@ module Elasticsearch
         # Client for the "watcher" namespace (includes the {Watcher::Actions} methods)
         #
         class WatcherClient
-          include Elasticsearch::API::Common::Client,
-                  Elasticsearch::API::Common::Client::Base,
-                  Elasticsearch::API::Watcher::Actions
+          include Elasticsearch2::API::Common::Client,
+                  Elasticsearch2::API::Common::Client::Base,
+                  Elasticsearch2::API::Watcher::Actions
         end
 
         # Proxy method for {WatcherClient}, available in the receiving object
@@ -32,6 +32,6 @@ module Elasticsearch
   end
 end
 
-Elasticsearch::API.__send__ :include, Elasticsearch::API::Watcher
+Elasticsearch2::API.__send__ :include, Elasticsearch2::API::Watcher
 
-Elasticsearch::Transport::Client.__send__ :include, Elasticsearch::API::Watcher if defined?(Elasticsearch::Transport::Client)
+Elasticsearch2::Transport::Client.__send__ :include, Elasticsearch2::API::Watcher if defined?(Elasticsearch2::Transport::Client)

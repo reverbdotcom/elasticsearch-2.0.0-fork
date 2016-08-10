@@ -2,7 +2,7 @@ require 'test_helper'
 
 require 'hashie'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class HashieTest < ::Test::Unit::TestCase
 

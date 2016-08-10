@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
@@ -48,7 +48,7 @@ module Elasticsearch
       #     # => {"_index"=>"myindex" ... "_source"=>{"title"=>"TEST"}}
       #
       #     sleep 3 and client.get index: 'myindex', type: 'mytype', id: '1'
-      #     # => Elasticsearch::Transport::Transport::Errors::NotFound: [404] ...
+      #     # => Elasticsearch2::Transport::Transport::Errors::NotFound: [404] ...
       #
       # @option arguments [String] :id Document ID (optional, will be auto-generated if missing)
       # @option arguments [String] :index The name of the index (*Required*)

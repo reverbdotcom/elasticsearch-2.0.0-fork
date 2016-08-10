@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
+class Elasticsearch2::Transport::ClientTest < Test::Unit::TestCase
 
   class DummyTransport
     def initialize(*); end
@@ -8,27 +8,27 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
   context "Client" do
     setup do
-      Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.stubs(:__build_connections)
-      @client = Elasticsearch::Transport::Client.new
+      Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.stubs(:__build_connections)
+      @client = Elasticsearch2::Transport::Client.new
     end
 
-    should "be aliased as Elasticsearch::Client" do
+    should "be aliased as Elasticsearch2::Client" do
       assert_nothing_raised do
-        assert_instance_of(Elasticsearch::Transport::Client, Elasticsearch::Client.new)
+        assert_instance_of(Elasticsearch2::Transport::Client, Elasticsearch2::Client.new)
       end
     end
 
     should "have default transport" do
-      assert_instance_of Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS, @client.transport
+      assert_instance_of Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS, @client.transport
     end
 
     should "instantiate custom transport class" do
-      client = Elasticsearch::Transport::Client.new :transport_class => DummyTransport
+      client = Elasticsearch2::Transport::Client.new :transport_class => DummyTransport
       assert_instance_of DummyTransport, client.transport
     end
 
     should "take custom transport instance" do
-      client = Elasticsearch::Transport::Client.new :transport => DummyTransport.new
+      client = Elasticsearch2::Transport::Client.new :transport => DummyTransport.new
       assert_instance_of DummyTransport, client.transport
     end
 
@@ -40,50 +40,50 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
     should "send GET request as POST with the send_get_body_as option" do
       transport = DummyTransport.new
-      client = Elasticsearch::Transport::Client.new :transport => transport, :send_get_body_as => 'POST'
+      client = Elasticsearch2::Transport::Client.new :transport => transport, :send_get_body_as => 'POST'
       transport.expects(:perform_request).with 'POST', '/', {}, '{"foo":"bar"}'
       client.perform_request 'GET', '/', {}, '{"foo":"bar"}'
     end
 
     should "have default logger for transport" do
-      client = Elasticsearch::Transport::Client.new :log => true
+      client = Elasticsearch2::Transport::Client.new :log => true
       assert_respond_to client.transport.logger, :info
     end
 
     should "have default tracer for transport" do
-      client = Elasticsearch::Transport::Client.new :trace => true
+      client = Elasticsearch2::Transport::Client.new :trace => true
       assert_respond_to client.transport.tracer, :info
     end
 
     should "initialize the default transport class" do
-      Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.
+      Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.
         unstub(:__build_connections)
 
-      client = Elasticsearch::Client.new
+      client = Elasticsearch2::Client.new
       assert_match /Faraday/, client.transport.connections.first.connection.headers['User-Agent']
     end
 
     should "pass options to the transport" do
-      client = Elasticsearch::Transport::Client.new :transport_options => { :foo => 'bar' }
+      client = Elasticsearch2::Transport::Client.new :transport_options => { :foo => 'bar' }
       assert_equal 'bar', client.transport.options[:transport_options][:foo]
     end
 
     should "merge request_timeout to the transport options" do
-      client = Elasticsearch::Transport::Client.new :request_timeout => 120
+      client = Elasticsearch2::Transport::Client.new :request_timeout => 120
       assert_equal 120, client.transport.options[:transport_options][:request][:timeout]
     end
 
     context "when passed hosts" do
       should "have localhost by default" do
-        c = Elasticsearch::Transport::Client.new
+        c = Elasticsearch2::Transport::Client.new
         assert_equal 'localhost', c.transport.hosts.first[:host]
       end
 
       should "take :hosts, :host, :url or :urls" do
-        c1 = Elasticsearch::Transport::Client.new :hosts => ['foobar']
-        c2 = Elasticsearch::Transport::Client.new :host  => 'foobar'
-        c3 = Elasticsearch::Transport::Client.new :url   => 'foobar'
-        c4 = Elasticsearch::Transport::Client.new :urls  => 'foo,bar'
+        c1 = Elasticsearch2::Transport::Client.new :hosts => ['foobar']
+        c2 = Elasticsearch2::Transport::Client.new :host  => 'foobar'
+        c3 = Elasticsearch2::Transport::Client.new :url   => 'foobar'
+        c4 = Elasticsearch2::Transport::Client.new :urls  => 'foo,bar'
 
         assert_equal 'foobar', c1.transport.hosts[0][:host]
         assert_equal 'foobar', c2.transport.hosts[0][:host]
@@ -99,7 +99,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       teardown { ENV.delete('ELASTICSEARCH_URL')     }
 
       should "use a single host" do
-        c = Elasticsearch::Transport::Client.new
+        c = Elasticsearch2::Transport::Client.new
 
         assert_equal 1,     c.transport.hosts.size
         assert_equal 'foobar', c.transport.hosts.first[:host]
@@ -107,7 +107,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
       should "use multiple hosts" do
         ENV['ELASTICSEARCH_URL'] = 'foo, bar'
-        c = Elasticsearch::Transport::Client.new
+        c = Elasticsearch2::Transport::Client.new
 
         assert_equal 2,     c.transport.hosts.size
         assert_equal 'foo', c.transport.hosts[0][:host]
@@ -241,20 +241,20 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
     context "detecting adapter for Faraday" do
       setup do
-        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
+        Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
         begin; Object.send(:remove_const, :Typhoeus); rescue NameError; end
         begin; Object.send(:remove_const, :Patron);   rescue NameError; end
       end
 
       should "use the default adapter" do
-        c = Elasticsearch::Transport::Client.new
+        c = Elasticsearch2::Transport::Client.new
         handlers = c.transport.connections.all.first.connection.builder.handlers
 
         assert_includes handlers, Faraday::Adapter::NetHttp
       end
 
       should "use the adapter from arguments" do
-        c = Elasticsearch::Transport::Client.new :adapter => :typhoeus
+        c = Elasticsearch2::Transport::Client.new :adapter => :typhoeus
         handlers = c.transport.connections.all.first.connection.builder.handlers
 
         assert_includes handlers, Faraday::Adapter::Typhoeus
@@ -263,7 +263,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       should "detect the adapter" do
         require 'patron'; load 'patron.rb'
 
-        c = Elasticsearch::Transport::Client.new
+        c = Elasticsearch2::Transport::Client.new
         handlers = c.transport.connections.all.first.connection.builder.handlers
 
         assert_includes handlers, Faraday::Adapter::Patron
@@ -272,12 +272,12 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
     context "configuring Faraday" do
       setup do
-        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
+        Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
         begin; Object.send(:remove_const, :Typhoeus); rescue NameError; end
       end
 
       should "apply faraday adapter" do
-        c = Elasticsearch::Transport::Client.new do |faraday|
+        c = Elasticsearch2::Transport::Client.new do |faraday|
           faraday.adapter :typhoeus
         end
         handlers = c.transport.connections.all.first.connection.builder.handlers
@@ -286,7 +286,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end
 
       should "apply faraday response logger" do
-        c = Elasticsearch::Transport::Client.new do |faraday|
+        c = Elasticsearch2::Transport::Client.new do |faraday|
           faraday.response :logger
         end
         handlers = c.transport.connections.all.first.connection.builder.handlers
@@ -297,11 +297,11 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
     context "when passed options" do
       setup do
-        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
+        Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
       end
 
       should "configure the HTTP scheme" do
-        c = Elasticsearch::Transport::Client.new \
+        c = Elasticsearch2::Transport::Client.new \
           :hosts => ['node1', 'node2'],
           :port => 1234, :scheme => 'https', :user => 'USERNAME', :password => 'PASSWORD'
 
@@ -310,11 +310,11 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end
 
       should "keep the credentials after reloading" do
-        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.
+        Elasticsearch2::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.
           stubs(:sniffer).
           returns( mock(:hosts => [ {:host => 'foobar', :port => 4567, :id => 'foobar4567'} ]) )
 
-        c = Elasticsearch::Transport::Client.new \
+        c = Elasticsearch2::Transport::Client.new \
           :url => 'http://foo:1234',
           :user => 'USERNAME', :password => 'PASSWORD'
 
@@ -326,7 +326,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end
 
       should "transfer selected host parts into the 'http' options" do
-        c = Elasticsearch::Transport::Client.new \
+        c = Elasticsearch2::Transport::Client.new \
           :host => { :scheme => 'https', :port => '8080', :host => 'node1', :user => 'U', :password => 'P' }
 
         assert_equal 'https://U:P@node1:8080/', c.transport.connections.first.full_url('')
@@ -338,7 +338,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end
 
       should "transfer selected host parts from URL into the 'http' options" do
-        c = Elasticsearch::Transport::Client.new :url => 'https://U:P@node1:8080'
+        c = Elasticsearch2::Transport::Client.new :url => 'https://U:P@node1:8080'
 
         assert_equal 'https://U:P@node1:8080/', c.transport.connections.first.full_url('')
 

@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module DSL
     module Search
       module Filters
@@ -36,7 +36,7 @@ module Elasticsearch
           # @return [self]
           #
           def query(*args, &block)
-            @query = block ? Elasticsearch::DSL::Search::Query.new(*args, &block) : args.first
+            @query = block ? Elasticsearch2::DSL::Search::Query.new(*args, &block) : args.first
             self
           end
 
@@ -45,7 +45,7 @@ module Elasticsearch
           # @return [self]
           #
           def filter(*args, &block)
-            @filter = block ? Elasticsearch::DSL::Search::Filter.new(*args, &block) : args.first
+            @filter = block ? Elasticsearch2::DSL::Search::Filter.new(*args, &block) : args.first
             self
           end
 

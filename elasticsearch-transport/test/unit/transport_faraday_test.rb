@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestCase
-  include Elasticsearch::Transport::Transport::HTTP
+class Elasticsearch2::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestCase
+  include Elasticsearch2::Transport::Transport::HTTP
 
   context "Faraday transport" do
     setup do
@@ -28,7 +28,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
     should "return a Response" do
       @transport.connections.first.connection.expects(:run_request).returns(stub_everything)
       response = @transport.perform_request 'GET', '/'
-      assert_instance_of Elasticsearch::Transport::Transport::Response, response
+      assert_instance_of Elasticsearch2::Transport::Transport::Response, response
     end
 
     should "properly prepare the request" do
@@ -52,15 +52,15 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
 
     should "pass the selector_class options to collection" do
       @transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
-                               :options => { :selector_class => Elasticsearch::Transport::Transport::Connections::Selector::Random }
-      assert_instance_of Elasticsearch::Transport::Transport::Connections::Selector::Random,
+                               :options => { :selector_class => Elasticsearch2::Transport::Transport::Connections::Selector::Random }
+      assert_instance_of Elasticsearch2::Transport::Transport::Connections::Selector::Random,
                          @transport.connections.selector
     end
 
     should "pass the selector option to collection" do
       @transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
-                               :options => { :selector => Elasticsearch::Transport::Transport::Connections::Selector::Random.new }
-      assert_instance_of Elasticsearch::Transport::Transport::Connections::Selector::Random,
+                               :options => { :selector => Elasticsearch2::Transport::Transport::Connections::Selector::Random.new }
+      assert_instance_of Elasticsearch2::Transport::Transport::Connections::Selector::Random,
                          @transport.connections.selector
     end
 

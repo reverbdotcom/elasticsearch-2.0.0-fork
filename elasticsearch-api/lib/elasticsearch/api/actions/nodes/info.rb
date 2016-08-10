@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Nodes
       module Actions
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :network Return information about network
         # @option arguments [Boolean] :os Return information about the operating system
         # @option arguments [Boolean] :plugins Return information about plugins
-        # @option arguments [Boolean] :process Return information about the Elasticsearch process
+        # @option arguments [Boolean] :process Return information about the Elasticsearch2 process
         # @option arguments [Boolean] :settings Return information about node settings
         # @option arguments [Boolean] :thread_pool Return information about the thread pool
         # @option arguments [Boolean] :transport Return information about transport

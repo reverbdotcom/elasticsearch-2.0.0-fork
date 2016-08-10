@@ -1,8 +1,8 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
-      # Retrieve an indexed script from Elasticsearch
+      # Retrieve an indexed script from Elasticsearch2
       #
       # @option arguments [String] :id Template ID (*Required*)
       # @option arguments [Hash] :body The document

@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Snapshot
       module Actions

@@ -5,11 +5,11 @@ require 'elasticsearch/extensions/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-extensions"
-  s.version       = Elasticsearch::Extensions::VERSION
+  s.version       = Elasticsearch2::Extensions::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
-  s.description   = %q{Extensions for the Elasticsearch Rubygem}
-  s.summary       = %q{Extensions for the Elasticsearch Rubygem}
+  s.description   = %q{Extensions for the Elasticsearch2 Rubygem}
+  s.summary       = %q{Extensions for the Elasticsearch2 Rubygem}
   s.homepage      = ""
   s.license       = "Apache 2"
 

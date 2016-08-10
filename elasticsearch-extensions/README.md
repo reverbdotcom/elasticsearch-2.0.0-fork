@@ -1,4 +1,4 @@
-# Elasticsearch::Extensions
+# Elasticsearch2::Extensions
 
 This library provides a set of extensions to the
 [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby) Rubygem.
@@ -25,16 +25,16 @@ or install it from a source code checkout:
 
 ### Backup
 
-Backup Elasticsearch indices as flat JSON files on the disk via integration
+Backup Elasticsearch2 indices as flat JSON files on the disk via integration
 with the [_Backup_](http://backup.github.io/backup/v4/) gem.
 
 Use the Backup gem's DSL to configure the backup:
 
     require 'elasticsearch/extensions/backup'
 
-    Model.new(:elasticsearch_backup, 'Elasticsearch') do
+    Model.new(:elasticsearch_backup, 'Elasticsearch2') do
 
-      database Elasticsearch do |db|
+      database Elasticsearch2 do |db|
         db.url     = 'http://localhost:9200'
         db.indices = 'test'
       end
@@ -50,7 +50,7 @@ Perform the backup with the Backup gem's command line utility:
 
     $ backup perform -t elasticsearch_backup
 
-See more information in the [`Backup::Database::Elasticsearch`](lib/extensions/backup.rb)
+See more information in the [`Backup::Database::Elasticsearch2`](lib/extensions/backup.rb)
 class documentation.
 
 ### Reindex
@@ -58,18 +58,18 @@ class documentation.
 Copy documents from one index and cluster into another one, for example for purposes of changing
 the settings and mappings of the index.
 
-**NOTE:** Elasticsearch natively supports re-indexing since version 2.3. This extension is useful
+**NOTE:** Elasticsearch2 natively supports re-indexing since version 2.3. This extension is useful
           when you need the feature on older versions.
 
 When the extension is loaded together with the
-[Ruby client for Elasticsearch](../elasticsearch/README.md),
+[Ruby client for Elasticsearch2](../elasticsearch/README.md),
 a `reindex` method is added to the client:
 
     require 'elasticsearch'
     require 'elasticsearch/extensions/reindex'
 
-    client = Elasticsearch::Client.new
-    target_client = Elasticsearch::Client.new url: 'http://localhost:9250', log: true
+    client = Elasticsearch2::Client.new
+    target_client = Elasticsearch2::Client.new url: 'http://localhost:9250', log: true
 
     client.index index: 'test', type: 'd', body: { title: 'foo' }
 
@@ -83,7 +83,7 @@ a `reindex` method is added to the client:
     # => ... hits ... "title"=>"FOO"
 
 The method takes similar arguments as the core API
-[`reindex`](http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#reindex-instance_method)
+[`reindex`](http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch2/API/Actions#reindex-instance_method)
 method.
 
 You can also use the `Reindex` class directly:
@@ -91,36 +91,36 @@ You can also use the `Reindex` class directly:
     require 'elasticsearch'
     require 'elasticsearch/extensions/reindex'
 
-    client = Elasticsearch::Client.new
+    client = Elasticsearch2::Client.new
 
-    reindex = Elasticsearch::Extensions::Reindex.new \
+    reindex = Elasticsearch2::Extensions::Reindex.new \
                 source: { index: 'test', client: client },
                 target: { index: 'test-copy' }
 
     reindex.perform
 
-See more information in the [`Elasticsearch::Extensions::Reindex::Reindex`](lib/extensions/reindex.rb)
+See more information in the [`Elasticsearch2::Extensions::Reindex::Reindex`](lib/extensions/reindex.rb)
 class documentation.
 
 ### ANSI
 
-Colorize and format selected  Elasticsearch response parts in terminal:
+Colorize and format selected  Elasticsearch2 response parts in terminal:
 
 Display formatted search results:
 
     require 'elasticsearch/extensions/ansi'
-    puts Elasticsearch::Client.new.search.to_ansi
+    puts Elasticsearch2::Client.new.search.to_ansi
 
 Display a table with the output of the `_analyze` API:
 
     require 'elasticsearch/extensions/ansi'
-    puts Elasticsearch::Client.new.indices.analyze(text: 'Quick Brown Fox Jumped').to_ansi
+    puts Elasticsearch2::Client.new.indices.analyze(text: 'Quick Brown Fox Jumped').to_ansi
 
-[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/ANSI)
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch2/Extensions/ANSI)
 
 ### Test::Cluster
 
-Allows to programatically start and stop an Elasticsearch cluster suitable for isolating tests.
+Allows to programatically start and stop an Elasticsearch2 cluster suitable for isolating tests.
 
 The HTTP service is running on ports `9250-*` by default.
 
@@ -128,20 +128,20 @@ Start and stop the default cluster:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.start
-    Elasticsearch::Extensions::Test::Cluster.stop
+    Elasticsearch2::Extensions::Test::Cluster.start
+    Elasticsearch2::Extensions::Test::Cluster.stop
 
-Start the cluster on specific port, with a specific Elasticsearch version, number of nodes and cluster name:
+Start the cluster on specific port, with a specific Elasticsearch2 version, number of nodes and cluster name:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.start \
+    Elasticsearch2::Extensions::Test::Cluster.start \
       cluster_name: "my-testing-cluster",
       command:      "/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch",
       port:         9350,
       nodes:        3
 
-    # Starting 3 Elasticsearch nodes.....................
+    # Starting 3 Elasticsearch2 nodes.....................
     # --------------------------------------------------------------------------------
     # Cluster:            my-testing-cluster
     # Status:             green
@@ -155,9 +155,9 @@ Stop this cluster:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.stop port: 9350
+    Elasticsearch2::Extensions::Test::Cluster.stop port: 9350
 
-    # Stopping Elasticsearch nodes... stopped PID 54469. stopped PID 54470. stopped PID 54468.
+    # Stopping Elasticsearch2 nodes... stopped PID 54469. stopped PID 54470. stopped PID 54468.
     # # => [54469, 54470, 54468]
 
 You can control the cluster configuration with environment variables as well:
@@ -167,19 +167,19 @@ You can control the cluster configuration with environment variables as well:
     TEST_CLUSTER_PORT=9350 \
     TEST_CLUSTER_NODES=3 \
     TEST_CLUSTER_NAME=my_testing_cluster \
-    ruby -r elasticsearch -e "require 'elasticsearch/extensions/test/cluster'; Elasticsearch::Extensions::Test::Cluster.start"
+    ruby -r elasticsearch -e "require 'elasticsearch/extensions/test/cluster'; Elasticsearch2::Extensions::Test::Cluster.start"
 
 To prevent deleting data and configurations when the cluster is started, for example in a development environment,
 use the `clear_cluster: false` option or the `TEST_CLUSTER_CLEAR=false` environment variable.
 
-[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster)
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch2/Extensions/Test/Cluster)
 
 ### Test::StartupShutdown
 
 Allows to register `startup` and `shutdown` hooks for Test::Unit, similarly to RSpec's `before(:all)`,
 compatible with the [Test::Unit 2](https://github.com/test-unit/test-unit/blob/master/lib/test/unit/testcase.rb) syntax.
 
-The extension is useful for e.g. starting the testing Elasticsearch cluster before the test suite is executed,
+The extension is useful for e.g. starting the testing Elasticsearch2 cluster before the test suite is executed,
 and stopping it afterwards.
 
 ** IMPORTANT NOTE ** You have to register the handler for `shutdown` hook before requiring 'test/unit':
@@ -191,15 +191,15 @@ and stopping it afterwards.
 Example of handler registration:
 
     class MyTest < Test::Unit::TestCase
-      extend Elasticsearch::Extensions::Test::StartupShutdown
+      extend Elasticsearch2::Extensions::Test::StartupShutdown
 
       startup  { puts "Suite starting up..." }
       shutdown { puts "Suite shutting down..." }
     end
 
-[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/StartupShutdown)
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch2/Extensions/Test/StartupShutdown)
 
-Examples in the Elasticsearch gem test suite: [1](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/integration/client_test.rb#L4-L6), [2](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/test_helper.rb#L44)
+Examples in the Elasticsearch2 gem test suite: [1](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/integration/client_test.rb#L4-L6), [2](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/test_helper.rb#L44)
 
 ### Test::Profiling
 
@@ -213,7 +213,7 @@ Let's define a simple profiling test in a `profiling_test.rb` file:
     require 'elasticsearch/extensions/test/profiling'
 
     class ProfilingTest < Test::Unit::TestCase
-      extend Elasticsearch::Extensions::Test::Profiling
+      extend Elasticsearch2::Extensions::Test::Profiling
 
       context "Mathematics" do
         measure "divide numbers", count: 10_000 do
@@ -240,9 +240,9 @@ Let's run it:
 When using the `QUIET` option, only the statistics on operation throughput are printed.
 When omitted, the full code profile by [RubyProf](https://github.com/ruby-prof/ruby-prof) is printed.
 
-[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/StartupShutdown)
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch2/Extensions/Test/StartupShutdown)
 
-[Example in the Elasticsearch gem](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/profile/client_benchmark_test.rb)
+[Example in the Elasticsearch2 gem](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/profile/client_benchmark_test.rb)
 
 
 ## Development
@@ -265,7 +265,7 @@ can use Ruby 2.x syntax and features.
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2013 Elasticsearch <http://www.elasticsearch.org>
+    Copyright (c) 2013 Elasticsearch2 <http://www.elasticsearch.org>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -1,15 +1,15 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
+class Elasticsearch2::Transport::Transport::BaseTest < Test::Unit::TestCase
 
   class EmptyTransport
-    include Elasticsearch::Transport::Transport::Base
+    include Elasticsearch2::Transport::Transport::Base
   end
 
   class DummyTransport
-    include Elasticsearch::Transport::Transport::Base
+    include Elasticsearch2::Transport::Transport::Base
     def __build_connection(host, options={}, block=nil)
-      Elasticsearch::Transport::Transport::Connections::Connection.new :host => host, :connection => Object.new
+      Elasticsearch2::Transport::Transport::Connections::Connection.new :host => host, :connection => Object.new
     end
   end
 
@@ -39,7 +39,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
     should "have default serializer" do
       transport = DummyTransport.new
-      assert_instance_of Elasticsearch::Transport::Transport::Base::DEFAULT_SERIALIZER_CLASS, transport.serializer
+      assert_instance_of Elasticsearch2::Transport::Transport::Base::DEFAULT_SERIALIZER_CLASS, transport.serializer
     end
 
     should "have custom serializer" do
@@ -52,7 +52,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
     should "have default sniffer" do
       transport = DummyTransport.new
-      assert_instance_of Elasticsearch::Transport::Transport::Sniffer, transport.sniffer
+      assert_instance_of Elasticsearch2::Transport::Transport::Sniffer, transport.sniffer
     end
 
     should "have custom sniffer" do
@@ -140,13 +140,13 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
     should "get the connection" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
-      @transport.perform_request 'GET', '/' do; Elasticsearch::Transport::Transport::Response.new 200, 'OK'; end
+      @transport.perform_request 'GET', '/' do; Elasticsearch2::Transport::Transport::Response.new 200, 'OK'; end
     end
 
     should "raise an error when no connection is available" do
       @transport.expects(:get_connection).returns(nil)
-      assert_raise Elasticsearch::Transport::Transport::Error do
-        @transport.perform_request 'GET', '/' do; Elasticsearch::Transport::Transport::Response.new 200, 'OK'; end
+      assert_raise Elasticsearch2::Transport::Transport::Error do
+        @transport.perform_request 'GET', '/' do; Elasticsearch2::Transport::Transport::Response.new 200, 'OK'; end
       end
     end
 
@@ -156,7 +156,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
       @transport.perform_request 'GET', '/' do |connection, url|
         x += 1
-        Elasticsearch::Transport::Transport::Response.new 200, 'OK'
+        Elasticsearch2::Transport::Transport::Response.new 200, 'OK'
       end
 
       assert_equal 1, x
@@ -167,10 +167,10 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.serializer.expects(:load).returns({'foo' => 'bar'})
 
       response = @transport.perform_request 'GET', '/' do
-                   Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}', {"content-type" => 'application/json'}
+                   Elasticsearch2::Transport::Transport::Response.new 200, '{"foo":"bar"}', {"content-type" => 'application/json'}
                  end
 
-      assert_instance_of Elasticsearch::Transport::Transport::Response, response
+      assert_instance_of Elasticsearch2::Transport::Transport::Response, response
       assert_equal 'bar', response.body['foo']
     end
 
@@ -178,10 +178,10 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).never
       response = @transport.perform_request 'GET', '/' do
-                   Elasticsearch::Transport::Transport::Response.new 200, 'FOOBAR', {"content-type" => 'text/plain'}
+                   Elasticsearch2::Transport::Transport::Response.new 200, 'FOOBAR', {"content-type" => 'text/plain'}
                  end
 
-      assert_instance_of Elasticsearch::Transport::Transport::Response, response
+      assert_instance_of Elasticsearch2::Transport::Transport::Response, response
       assert_equal 'FOOBAR', response.body
     end
 
@@ -189,10 +189,10 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).never
       response = @transport.perform_request 'GET', '/' do
-                   Elasticsearch::Transport::Transport::Response.new 200, '', {"content-type" => 'application/json'}
+                   Elasticsearch2::Transport::Transport::Response.new 200, '', {"content-type" => 'application/json'}
                  end
 
-      assert_instance_of Elasticsearch::Transport::Transport::Response, response
+      assert_instance_of Elasticsearch2::Transport::Transport::Response, response
       assert_equal '', response.body
     end
 
@@ -210,27 +210,27 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
     should "raise an error for HTTP status 404" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
-      assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::NotFound do
         @transport.perform_request 'GET', '/' do
-          Elasticsearch::Transport::Transport::Response.new 404, 'NOT FOUND'
+          Elasticsearch2::Transport::Transport::Response.new 404, 'NOT FOUND'
         end
       end
     end
 
     should "raise an error for HTTP status 404 with application/json content type" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
-      assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::NotFound do
         @transport.perform_request 'GET', '/' do
-          Elasticsearch::Transport::Transport::Response.new 404, 'NOT FOUND', {"content-type" => 'application/json'}
+          Elasticsearch2::Transport::Transport::Response.new 404, 'NOT FOUND', {"content-type" => 'application/json'}
         end
       end
     end
 
     should "raise an error on server failure" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
-      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request 'GET', '/' do
-          Elasticsearch::Transport::Transport::Response.new 500, 'ERROR'
+          Elasticsearch2::Transport::Transport::Response.new 500, 'ERROR'
         end
       end
     end
@@ -329,7 +329,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       assert_equal [500], @transport.instance_variable_get(:@retry_on_status)
 
       @block.expects(:call).
-             returns(Elasticsearch::Transport::Transport::Response.new 400, 'Bad Request').
+             returns(Elasticsearch2::Transport::Transport::Response.new 400, 'Bad Request').
              times(1)
 
       @transport.logger.
@@ -337,7 +337,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
           with( regexp_matches(/Attempt \d to get response/) ).
           never
 
-      assert_raise Elasticsearch::Transport::Transport::Errors::BadRequest do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::BadRequest do
         @transport.perform_request('GET', '/', &@block)
       end
     end
@@ -347,7 +347,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       assert_equal [500], @transport.instance_variable_get(:@retry_on_status)
 
       @block.expects(:call).
-             returns(Elasticsearch::Transport::Transport::Response.new 500, 'Internal Error').
+             returns(Elasticsearch2::Transport::Transport::Response.new 500, 'Internal Error').
              times(4)
 
       @transport.logger.
@@ -355,7 +355,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
           with( regexp_matches(/Attempt \d to get response/) ).
           times(4)
 
-      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request('GET', '/', &@block)
       end
     end
@@ -384,7 +384,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.logger.expects(:debug). with '< {"foo":"bar"}'
 
       @transport.perform_request 'POST', '_search', {:size => 1}, {:foo => 'bar'} do
-                   Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}'
+                   Elasticsearch2::Transport::Transport::Response.new 200, '{"foo":"bar"}'
                  end
     end
 
@@ -402,17 +402,17 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       end
 
 
-      @transport.perform_request('GET', '/') {Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}' }
+      @transport.perform_request('GET', '/') {Elasticsearch2::Transport::Transport::Response.new 200, '{"foo":"bar"}' }
     end
 
-    should "log a failed Elasticsearch request" do
+    should "log a failed Elasticsearch2 request" do
       @block = Proc.new { |c, u| puts "ERROR" }
-      @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
+      @block.expects(:call).returns(Elasticsearch2::Transport::Transport::Response.new 500, 'ERROR')
 
       @transport.expects(:__log)
       @transport.logger.expects(:fatal)
 
-      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request('POST', '_search', &@block)
       end
     end unless RUBY_1_8
@@ -466,17 +466,17 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       end.once
 
       @transport.perform_request 'POST', '_search', {:size => 1}, {:q => 'foo'} do
-                   Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}'
+                   Elasticsearch2::Transport::Transport::Response.new 200, '{"foo":"bar"}'
                  end
     end
 
-    should "trace a failed Elasticsearch request" do
+    should "trace a failed Elasticsearch2 request" do
       @block = Proc.new { |c, u| puts "ERROR" }
-      @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
+      @block.expects(:call).returns(Elasticsearch2::Transport::Transport::Response.new 500, 'ERROR')
 
       @transport.expects(:__trace)
 
-      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+      assert_raise Elasticsearch2::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request('POST', '_search', &@block)
       end
     end unless RUBY_1_8
@@ -495,7 +495,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "log error and continue when timing out while sniffing hosts" do
-      @transport.sniffer.expects(:hosts).raises(Elasticsearch::Transport::Transport::SnifferTimeoutError)
+      @transport.sniffer.expects(:hosts).raises(Elasticsearch2::Transport::Transport::SnifferTimeoutError)
       @transport.logger.expects(:error)
       assert_nothing_raised do
         @transport.reload_connections!
@@ -584,13 +584,13 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.expects(:get_connection).returns(c)
       c.expects(:healthy!)
 
-      @transport.perform_request('GET', '/') { |connection, url| Elasticsearch::Transport::Transport::Response.new 200, 'OK' }
+      @transport.perform_request('GET', '/') { |connection, url| Elasticsearch2::Transport::Transport::Response.new 200, 'OK' }
     end
   end
 
   context "errors" do
     should "raise highest-level Error exception for any ServerError" do
-      assert_kind_of Elasticsearch::Transport::Transport::Error, Elasticsearch::Transport::Transport::ServerError.new
+      assert_kind_of Elasticsearch2::Transport::Transport::Error, Elasticsearch2::Transport::Transport::ServerError.new
     end
   end
 end

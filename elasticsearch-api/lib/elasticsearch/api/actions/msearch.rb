@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
@@ -56,11 +56,11 @@ module Elasticsearch
               sum << data
               sum
             end.
-            map { |item| Elasticsearch::API.serializer.dump(item) }
+            map { |item| Elasticsearch2::API.serializer.dump(item) }
           payload << "" unless payload.empty?
           payload = payload.join("\n")
         when body.is_a?(Array)
-          payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch::API.serializer.dump(d) }
+          payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch2::API.serializer.dump(d) }
           payload << "" unless payload.empty?
           payload = payload.join("\n")
         else

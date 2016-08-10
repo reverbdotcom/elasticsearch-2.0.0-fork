@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module Transport
     module Transport
 
@@ -18,7 +18,7 @@ module Elasticsearch
           @timeout   = transport.options[:sniffer_timeout] || 1
         end
 
-        # Retrieves the node list from the Elasticsearch's
+        # Retrieves the node list from the Elasticsearch2's
         # [_Nodes Info API_](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/)
         # and returns a normalized Array of information suitable for passing to transport.
         #

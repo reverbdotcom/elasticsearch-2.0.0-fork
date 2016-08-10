@@ -3,7 +3,7 @@ require 'pathname'
 
 require 'elasticsearch/extensions/test/cluster'
 
-class Elasticsearch::Extensions::TestClusterIntegrationTest < Test::Unit::TestCase
+class Elasticsearch2::Extensions::TestClusterIntegrationTest < Test::Unit::TestCase
   context "The Test::Cluster" do
     PATH_TO_BUILDS = Pathname(File.expand_path('../../../../../../tmp/builds', __FILE__))
 
@@ -21,8 +21,8 @@ class Elasticsearch::Extensions::TestClusterIntegrationTest < Test::Unit::TestCa
     @builds.each do |build|
       should "start and stop #{build.to_s}" do
         puts ("----- #{build.to_s} " + "-"*(80-7-build.to_s.size)).to_s.ansi(:bold)
-        Elasticsearch::Extensions::Test::Cluster.start command: PATH_TO_BUILDS.join(build.join('bin/elasticsearch')).to_s
-        Elasticsearch::Extensions::Test::Cluster.stop command: PATH_TO_BUILDS.join(build.join('bin/elasticsearch')).to_s
+        Elasticsearch2::Extensions::Test::Cluster.start command: PATH_TO_BUILDS.join(build.join('bin/elasticsearch')).to_s
+        Elasticsearch2::Extensions::Test::Cluster.stop command: PATH_TO_BUILDS.join(build.join('bin/elasticsearch')).to_s
       end
     end
   end

@@ -1,11 +1,11 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
       # Store a script in an internal index (`.scripts`), to be able to reference them
       # in search definitions (with dynamic scripting disabled)
       #
-      # @example Storing an Mvel script in Elasticsearch and using it in function score
+      # @example Storing an Mvel script in Elasticsearch2 and using it in function score
       #
       #     client.put_script lang: 'groovy', id: 'my_score', body: { script: 'log(_score * factor)' }
       #

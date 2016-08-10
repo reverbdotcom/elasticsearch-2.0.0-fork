@@ -1,4 +1,4 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Actions
 
@@ -57,7 +57,7 @@ module Elasticsearch
       #                             in the response for updates
       # @options arguments [String] :pipeline The pipeline ID to use for preprocessing incoming documents
       #
-      # @return [Hash] Deserialized Elasticsearch response
+      # @return [Hash] Deserialized Elasticsearch2 response
       #
       # @see http://elasticsearch.org/guide/reference/api/bulk/
       #

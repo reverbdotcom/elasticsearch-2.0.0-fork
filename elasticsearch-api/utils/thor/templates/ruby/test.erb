@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class <%= @module_namespace.empty? ? @method_name.camelize : @module_namespace.map {|n| n.capitalize}.join + @method_name.camelize %>Test < ::Test::Unit::TestCase
 

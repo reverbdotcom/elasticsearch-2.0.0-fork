@@ -2,14 +2,14 @@
 
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
-    class SuggestIntegrationTest < ::Elasticsearch::Test::IntegrationTestCase
-      include Elasticsearch::DSL::Search
+    class SuggestIntegrationTest < ::Elasticsearch2::Test::IntegrationTestCase
+      include Elasticsearch2::DSL::Search
 
       context "Suggest integration" do
         startup do
-          Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+          Elasticsearch2::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch2::Extensions::Test::Cluster.running?
         end
 
         setup do

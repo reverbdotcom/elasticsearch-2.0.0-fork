@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class SearchOptionsTest < ::Test::Unit::TestCase
-      subject { Elasticsearch::DSL::Search::Options.new }
+      subject { Elasticsearch2::DSL::Search::Options.new }
 
       context "Search options" do
         should "combine different options" do

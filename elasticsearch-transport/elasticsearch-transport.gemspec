@@ -5,10 +5,10 @@ require 'elasticsearch/transport/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-transport"
-  s.version       = Elasticsearch::Transport::VERSION
+  s.version       = Elasticsearch2::Transport::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
-  s.summary       = "Ruby client for Elasticsearch."
+  s.summary       = "Ruby client for Elasticsearch2."
   s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport"
   s.license       = "Apache 2"
 
@@ -75,6 +75,6 @@ Gem::Specification.new do |s|
   end
 
   s.description = <<-DESC.gsub(/^    /, '')
-    Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
+    Ruby client for Elasticsearch2. See the `elasticsearch` gem for full integration.
   DESC
 end

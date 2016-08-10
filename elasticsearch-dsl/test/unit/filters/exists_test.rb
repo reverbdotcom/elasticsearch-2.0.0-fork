@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     module Filters
       class ExistsTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Filters
+        include Elasticsearch2::DSL::Search::Filters
 
         context "Exists filter" do
           subject { Exists.new }

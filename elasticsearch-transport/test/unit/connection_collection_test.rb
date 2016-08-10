@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::Connections::CollectionTest < Test::Unit::TestCase
-  include Elasticsearch::Transport::Transport::Connections
+class Elasticsearch2::Transport::Transport::Connections::CollectionTest < Test::Unit::TestCase
+  include Elasticsearch2::Transport::Transport::Connections
 
   context "Connection collection" do
 

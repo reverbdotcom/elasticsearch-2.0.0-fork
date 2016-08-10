@@ -1,11 +1,11 @@
-module Elasticsearch
+module Elasticsearch2
   module API
     module Indices
       module Actions
 
         # Refresh the index and to make the changes (creates, updates, deletes) searchable.
         #
-        # By default, Elasticsearch has a delay of 1 second until changes to an index are
+        # By default, Elasticsearch2 has a delay of 1 second until changes to an index are
         # available for search; the delay is configurable, see {Indices::Actions#put_settings}.
         #
         # You can trigger this operation explicitly, for example when performing a sequence of commands

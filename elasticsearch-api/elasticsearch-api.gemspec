@@ -5,10 +5,10 @@ require 'elasticsearch/api/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-api"
-  s.version       = Elasticsearch::API::VERSION
+  s.version       = Elasticsearch2::API::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
-  s.summary       = "Ruby API for Elasticsearch."
+  s.summary       = "Ruby API for Elasticsearch2."
   s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api"
   s.license       = "Apache 2"
 
@@ -71,6 +71,6 @@ Gem::Specification.new do |s|
   end
 
   s.description = <<-DESC.gsub(/^    /, '')
-    Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+    Ruby API for Elasticsearch2. See the `elasticsearch` gem for full integration.
   DESC
 end

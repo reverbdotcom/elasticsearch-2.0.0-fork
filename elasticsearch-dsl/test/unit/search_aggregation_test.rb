@@ -1,34 +1,34 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class SearchAggregationTest < ::Test::Unit::TestCase
-      subject { Elasticsearch::DSL::Search::Aggregation.new }
+      subject { Elasticsearch2::DSL::Search::Aggregation.new }
 
       context "Search Aggregation" do
 
         should "be serializable to a Hash" do
           assert_equal( {}, subject.to_hash )
 
-          subject = Elasticsearch::DSL::Search::Aggregation.new
+          subject = Elasticsearch2::DSL::Search::Aggregation.new
           subject.instance_variable_set(:@value, { foo: 'bar' })
           assert_equal( { foo: 'bar' }, subject.to_hash )
         end
 
         should "evaluate the block and return itself" do
           block   = Proc.new { 1+1 }
-          subject = Elasticsearch::DSL::Search::Aggregation.new &block
+          subject = Elasticsearch2::DSL::Search::Aggregation.new &block
 
           subject.expects(:instance_eval)
-          assert_instance_of Elasticsearch::DSL::Search::Aggregation, subject.call
+          assert_instance_of Elasticsearch2::DSL::Search::Aggregation, subject.call
         end
 
         should "call the block and return itself" do
           block   = Proc.new { |s| 1+1 }
-          subject = Elasticsearch::DSL::Search::Aggregation.new &block
+          subject = Elasticsearch2::DSL::Search::Aggregation.new &block
 
           block.expects(:call)
-          assert_instance_of Elasticsearch::DSL::Search::Aggregation, subject.call
+          assert_instance_of Elasticsearch2::DSL::Search::Aggregation, subject.call
         end
 
         should "define the value with DSL methods" do

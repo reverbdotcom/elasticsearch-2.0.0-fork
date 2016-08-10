@@ -1,13 +1,13 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class ClientTest < ::Test::Unit::TestCase
 
       context "API Client" do
 
         class MyDummyClient
-          include Elasticsearch::API
+          include Elasticsearch2::API
         end
 
         subject { MyDummyClient.new }

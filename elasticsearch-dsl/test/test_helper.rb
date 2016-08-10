@@ -5,7 +5,7 @@ if ENV['COVERAGE'] || ENV['CI']
   SimpleCov.start { add_filter "/test|test_" }
 end
 
-at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
+at_exit { Elasticsearch2::Test::IntegrationTestCase.__run_at_exit_hooks }
 
 require 'test/unit'
 require 'shoulda-context'
@@ -20,21 +20,21 @@ require 'elasticsearch/extensions/test/startup_shutdown'
 
 require 'elasticsearch/dsl'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     class IntegrationTestCase < ::Test::Unit::TestCase
-      include Elasticsearch::Extensions::Test
+      include Elasticsearch2::Extensions::Test
       extend  StartupShutdown
 
       startup do
         Cluster.start(nodes: 1) if ENV['SERVER'] \
-                                && ! Elasticsearch::Extensions::Test::Cluster.running?
+                                && ! Elasticsearch2::Extensions::Test::Cluster.running?
       end
 
       shutdown do
         Cluster.stop if ENV['SERVER'] \
                      && started?      \
-                     && Elasticsearch::Extensions::Test::Cluster.running?
+                     && Elasticsearch2::Extensions::Test::Cluster.running?
       end
 
       def setup
@@ -51,7 +51,7 @@ module Elasticsearch
           ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
         end
 
-        @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
+        @client = Elasticsearch2::Client.new host: "localhost:#{@port}", logger: @logger
       end
 
       def teardown
