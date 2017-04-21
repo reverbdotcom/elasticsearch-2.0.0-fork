@@ -28,7 +28,7 @@ Install the `elasticsearch` package from [Rubygems](https://rubygems.org/gems/el
 
 To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+    gem 'elasticsearch2', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
 or install it from a source code checkout:
 
