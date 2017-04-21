@@ -32,7 +32,7 @@ Install the package from [Rubygems](https://rubygems.org):
 
 To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    gem 'elasticsearch-api', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+    gem 'elasticsearch2-api', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
 or install it from a source code checkout:
 

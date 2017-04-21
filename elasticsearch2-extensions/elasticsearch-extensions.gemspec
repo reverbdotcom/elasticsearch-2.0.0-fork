@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch2/extensions/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch-extensions"
+  s.name          = "elasticsearch2-extensions"
   s.version       = Elasticsearch2::Extensions::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]

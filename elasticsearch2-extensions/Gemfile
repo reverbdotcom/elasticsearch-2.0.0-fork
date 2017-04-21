@@ -3,14 +3,18 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in elasticsearch-extensions.gemspec
 gemspec
 
-if File.exist? File.expand_path("../../elasticsearch-api/elasticsearch-api.gemspec", __FILE__)
-  gem 'elasticsearch-api', :path => File.expand_path("../../elasticsearch-api", __FILE__), :require => false
+if File.exist? File.expand_path("../../elasticsearch2-api/elasticsearch-api.gemspec", __FILE__)
+  gem 'elasticsearch2-api', :path => File.expand_path("../../elasticsearch2-api", __FILE__), :require => false
 end
 
-if File.exist? File.expand_path("../../elasticsearch-transport/elasticsearch-transport.gemspec", __FILE__)
-  gem 'elasticsearch-transport', :path => File.expand_path("../../elasticsearch-transport", __FILE__), :require => false
+if File.exist? File.expand_path("../../elasticsearch2-transport/elasticsearch-transport.gemspec", __FILE__)
+  gem 'elasticsearch2-transport', :path => File.expand_path("../../elasticsearch2-transport", __FILE__), :require => false
 end
 
-if File.exist? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __FILE__)
-  gem 'elasticsearch', :path => File.expand_path("../../elasticsearch/", __FILE__)
+if File.exist? File.expand_path("../../elasticsearch2-extensions", __FILE__)
+  gem 'elasticsearch2-extensions', :path => File.expand_path("../../elasticsearch2-extensions", __FILE__), :require => false
+end
+
+if File.exist? File.expand_path("../../elasticsearch2/elasticsearch.gemspec", __FILE__)
+  gem 'elasticsearch2', :path => File.expand_path("../../elasticsearch2/", __FILE__)
 end

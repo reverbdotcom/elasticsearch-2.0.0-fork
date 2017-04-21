@@ -7,10 +7,10 @@ else
   gem "rake", "< 11.0"
 end
 
-gem 'elasticsearch-api',        :path => File.expand_path("../elasticsearch-api", __FILE__),        :require => false
-gem 'elasticsearch-transport',  :path => File.expand_path("../elasticsearch-transport", __FILE__),  :require => false
-gem 'elasticsearch-extensions', :path => File.expand_path("../elasticsearch-extensions", __FILE__), :require => false
-gem 'elasticsearch',            :path => File.expand_path("../elasticsearch", __FILE__),            :require => false
+gem 'elasticsearch2-api',        :path => File.expand_path("../elasticsearch2-api", __FILE__),        :require => false
+gem 'elasticsearch2-transport',  :path => File.expand_path("../elasticsearch2-transport", __FILE__),  :require => false
+gem 'elasticsearch2-extensions', :path => File.expand_path("../elasticsearch2-extensions", __FILE__), :require => false
+gem 'elasticsearch2',            :path => File.expand_path("../elasticsearch2", __FILE__),            :require => false
 
 gem "pry"
 gem "ansi"
