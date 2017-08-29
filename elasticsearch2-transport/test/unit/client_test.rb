@@ -74,7 +74,7 @@ class Elasticsearch2::Transport::ClientTest < Test::Unit::TestCase
     end
 
     should "set the 'Content-Type' header to 'application/json' by default" do
-      client = Elasticsearch::Transport::Client.new
+      client = Elasticsearch2::Transport::Client.new
       assert_equal 'application/json', client.transport.options[:transport_options][:headers]['Content-Type']
     end
 

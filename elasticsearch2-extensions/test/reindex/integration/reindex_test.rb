@@ -59,7 +59,7 @@ class Elasticsearch2::Extensions::ReindexIntegrationTest < Elasticsearch2::Test:
 
       @client.indices.refresh index: 'test_parent_1'
 
-      reindex = Elasticsearch::Extensions::Reindex.new \
+      reindex = Elasticsearch2::Extensions::Reindex.new \
                   source: { index: 'test_parent_1', client: @client },
                   target: { index: 'test_parent_2' },
                   batch_size: 2,

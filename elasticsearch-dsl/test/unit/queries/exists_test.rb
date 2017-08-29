@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module Elasticsearch2
   module Test
     module Queries
       class ExistsTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include Elasticsearch2::DSL::Search::Queries
 
         context "Exists query" do
           subject { Exists.new }
