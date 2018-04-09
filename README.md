@@ -22,6 +22,7 @@ just use a release matching major version of Elasticsearch.
 | 0.90          | → | 0.90          |
 | 1.x           | → | 1.x           |
 | 2.x           | → | 2.x           |
+| 5.x           | → | 5.x           |
 | master        | → | master        |
 
 ## Installation
@@ -32,7 +33,7 @@ Install the `elasticsearch` package from [Rubygems](https://rubygems.org/gems/el
 
 To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+    gem 'elasticsearch2', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
 or install it from a source code checkout:
 
@@ -52,7 +53,7 @@ library is a wrapper for two separate libraries:
   which provides a Ruby API for the Elasticsearch RESTful API
 
 ```ruby
-require 'elasticsearch'
+require 'elasticsearch2'
 
 client = Elasticsearch::Client.new log: true
 

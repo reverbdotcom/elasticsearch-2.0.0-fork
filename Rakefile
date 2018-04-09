@@ -23,7 +23,7 @@ end
 
 desc "Setup the project"
 task :setup do
-  unless File.exists?('./tmp/elasticsearch')
+  unless File.exist?('./tmp/elasticsearch')
     sh "git clone https://github.com/elasticsearch/elasticsearch.git tmp/elasticsearch"
   end
 end
@@ -54,7 +54,7 @@ namespace :bundle do
 end
 
 namespace :elasticsearch do
-  desc "Update the submodule with Elasticsearch core repository"
+  desc "Update the submodule with Elasticsearch2 core repository"
   task :update do
     sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} fetch origin --verbose"
     begin
@@ -72,7 +72,7 @@ namespace :elasticsearch do
   end
 
   desc <<-DESC
-    Build Elasticsearch for the specified branch ('origin/master' by default)"
+    Build Elasticsearch2 for the specified branch ('origin/master' by default)"
 
     Build a specific branch:
 
@@ -150,7 +150,7 @@ namespace :elasticsearch do
     Rake::Task['elasticsearch:builds'].invoke
   end
 
-  desc "Display the info for all branches in the Elasticsearch submodule"
+  desc "Display the info for all branches in the Elasticsearch2 submodule"
   task :status do
     sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} branch -v -v", :verbose => false
   end
@@ -177,6 +177,7 @@ namespace :test do
   desc "Run unit tests in all subprojects"
   task :unit do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
+    puts "Ruby [#{RUBY_VERSION}]" if defined? RUBY_VERSION
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
@@ -217,22 +218,22 @@ namespace :test do
   end
 
   namespace :cluster do
-    desc "Start Elasticsearch nodes for tests"
+    desc "Start Elasticsearch2 nodes for tests"
     task :start do
-      require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.start
+      require 'elasticsearch2/extensions/test/cluster'
+      Elasticsearch2::Extensions::Test::Cluster.start
     end
 
-    desc "Stop Elasticsearch nodes for tests"
+    desc "Stop Elasticsearch2 nodes for tests"
     task :stop do
-      require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.stop
+      require 'elasticsearch2/extensions/test/cluster'
+      Elasticsearch2::Extensions::Test::Cluster.stop
     end
 
     task :status do
-      require 'elasticsearch/extensions/test/cluster'
-      (puts "\e[31m[!] Test cluster not running\e[0m"; exit(1)) unless Elasticsearch::Extensions::Test::Cluster.running?
-      Elasticsearch::Extensions::Test::Cluster.__print_cluster_info(ENV['TEST_CLUSTER_PORT'] || 9250)
+      require 'elasticsearch2/extensions/test/cluster'
+      (puts "\e[31m[!] Test cluster not running\e[0m"; exit(1)) unless Elasticsearch2::Extensions::Test::Cluster.running?
+      Elasticsearch2::Extensions::Test::Cluster.__print_cluster_info(ENV['TEST_CLUSTER_PORT'] || 9250)
     end
   end
 end
